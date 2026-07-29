@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MEHMON — концепт</title>
+<style>
+  :root{
+    --bg:#100e0c;
+    --card:#1c1916;
+    --card2:#242019;
+    --line:#312c25;
+    --text:#f5efe4;
+    --muted:#9a9186;
+    --accent:#e0632f;      /* терракота */
+    --accent2:#f0a94b;     /* саффрон */
+    --teal:#1f9d94;        /* керамическая бирюза */
+    --green:#63b06a;
+    --radius:20px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:#000;display:flex;align-items:center;justify-content:center;
+    min-height:100vh;padding:20px;color:var(--text);
+  }
+  .phone{
+    width:390px;max-width:100%;height:844px;max-height:96vh;
+    background:var(--bg);border-radius:44px;position:relative;overflow:hidden;
+    box-shadow:0 40px 90px rgba(0,0,0,.6), 0 0 0 12px #111, 0 0 0 13px #2a2a2a;
+    display:flex;flex-direction:column;
+  }
+  .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:150px;height:30px;background:#000;border-radius:0 0 18px 18px;z-index:60}
+  .statusbar{height:52px;flex:0 0 52px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 26px 6px;font-size:13px;font-weight:600;z-index:50}
+  .statusbar .dots{display:flex;gap:5px;align-items:center}
+
+  .viewport{flex:1;overflow:hidden;position:relative}
+  .screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding:8px 20px 110px;opacity:0;transform:translateX(16px);pointer-events:none;transition:opacity .28s ease, transform .28s ease;-webkit-overflow-scrolling:touch}
+  .screen.active{opacity:1;transform:none;pointer-events:auto}
+  .screen::-webkit-scrollbar{display:none}
+
+  h1{font-size:26px;font-weight:800;letter-spacing:-.5px}
+  h2{font-size:19px;font-weight:700;margin:22px 0 12px}
+  .muted{color:var(--muted)}
+  .sub{color:var(--muted);font-size:14px;margin-top:3px}
+
+  /* Brand header */
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 0 6px}
+  .brand{display:flex;align-items:center;gap:11px}
+  .emblem{width:44px;height:44px;border-radius:13px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(224,99,47,.35)}
+  .emblem svg{width:26px;height:26px}
+  .brand .bt{display:flex;flex-direction:column;line-height:1.1}
+  .brand .bt .nm{font-size:19px;font-weight:900;letter-spacing:1.5px}
+  .brand .bt .tg{font-size:10.5px;color:var(--muted);letter-spacing:.3px;margin-top:1px}
+
+  .lang{display:flex;background:var(--card);border:1px solid var(--line);border-radius:100px;padding:3px}
+  .lang button{border:none;background:transparent;color:var(--muted);font-size:12px;font-weight:800;padding:6px 11px;border-radius:100px;cursor:pointer;transition:.15s}
+  .lang button.active{background:var(--teal);color:#fff}
+
+  .hero{margin-top:16px;border-radius:var(--radius);overflow:hidden;position:relative;height:200px;display:flex;align-items:flex-end;padding:18px;
+    background:linear-gradient(180deg,rgba(15,13,11,0) 30%,rgba(15,13,11,.85) 100%),radial-gradient(120% 120% at 80% 0%,#e0632f 0%,#7a2f18 55%,#241209 100%)}
+  .hero .badge{position:absolute;top:16px;left:16px;background:rgba(0,0,0,.35);backdrop-filter:blur(6px);padding:6px 12px;border-radius:100px;font-size:12px;font-weight:700}
+  .hero h3{font-size:24px;font-weight:800;line-height:1.1}
+  .hero p{color:#f4efe6cc;font-size:13px;margin-top:4px}
+
+  .actions{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+  .action{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 10px;text-align:center;cursor:pointer;transition:transform .12s, border-color .2s}
+  .action:active{transform:scale(.95)}
+  .action .ico{font-size:26px}
+  .action .t{font-size:12.5px;font-weight:700;margin-top:8px}
+
+  .chips{display:flex;gap:9px;overflow-x:auto;padding:4px 0;margin:0 -20px;padding-left:20px;padding-right:20px}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:0 0 auto;background:var(--card);border:1px solid var(--line);padding:9px 16px;border-radius:100px;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--muted);transition:.15s;white-space:nowrap}
+  .chip.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+  .search{position:relative;margin-top:14px}
+  .search input{width:100%;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 40px 13px 42px;color:var(--text);font-size:15px;font-family:inherit}
+  .search input:focus{outline:none;border-color:var(--accent)}
+  .search .si{position:absolute;left:15px;top:50%;transform:translateY(-50%);font-size:15px;opacity:.55;pointer-events:none}
+  .search .clr{position:absolute;right:9px;top:50%;transform:translateY(-50%);border:none;background:var(--card2);color:var(--muted);width:26px;height:26px;border-radius:50%;font-size:13px;cursor:pointer;display:none;align-items:center;justify-content:center}
+  .search .clr.show{display:flex}
+
+  .dish{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px;margin-bottom:12px;align-items:center}
+  .dish .pic{position:relative;width:76px;height:76px;flex:0 0 76px;border-radius:14px;font-size:34px;display:flex;align-items:center;justify-content:center;background:radial-gradient(120% 120% at 30% 20%,#3a332a,#211d18)}
+  .fav-btn{position:absolute;top:-6px;right:-6px;width:26px;height:26px;border-radius:50%;border:none;background:var(--card2);color:var(--muted);font-size:13px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:3;box-shadow:0 2px 6px rgba(0,0,0,.4);transition:transform .1s}
+  .fav-btn.on{color:#ff6b6b}
+  .fav-btn:active{transform:scale(.8)}
+  .dish .info{flex:1;min-width:0}
+  .dish .info .n{font-weight:700;font-size:15.5px}
+  .dish .info .d{color:var(--muted);font-size:12.5px;margin-top:3px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .dish .bottom{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+  .dish .price{font-weight:800;font-size:15px}
+  .add{width:34px;height:34px;border-radius:11px;border:none;background:var(--accent);color:#fff;font-size:20px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .1s}
+  .add:active{transform:scale(.85)}
+  .stepper{display:flex;align-items:center;gap:12px;background:var(--card2);border-radius:11px;padding:3px}
+  .stepper button{width:28px;height:28px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:17px;font-weight:700;cursor:pointer}
+  .stepper span{min-width:16px;text-align:center;font-weight:700;font-size:14px}
+
+  .cart-row{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:11px;margin-bottom:10px}
+  .cart-row .pic{width:52px;height:52px;flex:0 0 52px;border-radius:12px;font-size:24px;display:flex;align-items:center;justify-content:center;background:radial-gradient(120% 120% at 30% 20%,#3a332a,#211d18)}
+  .cart-row .n{font-weight:700;font-size:14.5px}
+  .cart-row .p{color:var(--muted);font-size:13px;margin-top:2px}
+  .empty{text-align:center;padding:60px 20px;color:var(--muted)}
+  .empty .big{font-size:56px;margin-bottom:14px;opacity:.6}
+
+  .summary{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:6px}
+  .sline{display:flex;justify-content:space-between;padding:6px 0;font-size:14px;color:var(--muted)}
+  .sline.total{color:var(--text);font-weight:800;font-size:18px;border-top:1px solid var(--line);margin-top:8px;padding-top:14px}
+
+  .seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px;margin:14px 0}
+  .seg button{flex:1;border:none;background:transparent;color:var(--muted);padding:11px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:.15s}
+  .seg button.active{background:var(--accent);color:#fff}
+
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:7px}
+  .field input, .field textarea{width:100%;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;color:var(--text);font-size:15px;font-family:inherit}
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--accent)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+  .pill-row{display:flex;gap:9px;flex-wrap:wrap}
+  .pill{background:var(--card);border:1px solid var(--line);padding:11px 16px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;color:var(--muted);transition:.15s}
+  .pill.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+  .guest{display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+  .guest .g-ctl{display:flex;align-items:center;gap:18px}
+  .guest .g-ctl button{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card2);color:var(--text);font-size:20px;font-weight:700;cursor:pointer}
+  .guest .g-ctl span{font-size:20px;font-weight:800;min-width:24px;text-align:center}
+
+  .pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+  .pay{position:relative;display:flex;align-items:center;gap:11px;background:var(--card);border:1.5px solid var(--line);border-radius:15px;padding:13px;cursor:pointer;transition:.15s}
+  .pay.active{border-color:var(--accent);background:#241c16}
+  .pay-ico{width:38px;height:38px;flex:0 0 38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:800;color:#fff}
+  .pay-t{font-size:14px;font-weight:700}
+  .pay-check{position:absolute;top:8px;right:10px;width:18px;height:18px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center}
+
+  /* ===== Floor plan (SVG blueprint) ===== */
+  .plan{position:relative;width:100%;border-radius:18px;overflow:hidden;margin-top:8px;background:#f4f2ee;box-shadow:0 6px 20px rgba(0,0,0,.35)}
+  .plan svg{display:block;width:100%;height:auto}
+  .plan svg g[data-free]{transition:opacity .1s}
+  .plan svg g[data-free]:active{opacity:.7}
+  .legend{display:flex;gap:12px 16px;margin:12px 2px 0;font-size:12px;color:var(--muted);flex-wrap:wrap}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .legend i{width:13px;height:13px;border-radius:4px;display:inline-block;border:2px solid}
+  .tbl-info{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin-top:12px;font-size:14px}
+  .tbl-info.on{border-color:var(--accent);background:#241c16}
+  .tbl-info .badge-n{width:36px;height:36px;flex:0 0 36px;border-radius:10px;background:var(--accent);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+  .tbl-info.off{color:var(--muted)}
+
+  .cta-wrap{position:absolute;left:0;right:0;bottom:84px;padding:0 20px;pointer-events:none;z-index:40}
+  .cta{width:100%;border:none;background:var(--accent);color:#fff;font-size:16px;font-weight:800;padding:17px;border-radius:16px;cursor:pointer;pointer-events:auto;box-shadow:0 12px 30px rgba(224,99,47,.4);display:flex;align-items:center;justify-content:center;gap:10px;transition:transform .1s}
+  .cta:active{transform:scale(.98)}
+  .btn-block{width:100%;border:none;background:var(--accent);color:#fff;font-size:16px;font-weight:800;padding:16px;border-radius:16px;cursor:pointer;margin-top:8px}
+  .btn-ghost{background:var(--card);border:1px solid var(--line);color:var(--text)}
+  .mini-cancel{border:1px solid var(--line);background:var(--card2);color:var(--muted);font-size:11.5px;font-weight:700;padding:5px 11px;border-radius:9px;cursor:pointer;transition:transform .1s,color .15s,border-color .15s}
+  .mini-cancel:active{transform:scale(.93)}
+  .mini-cancel:hover{color:var(--accent);border-color:var(--accent)}
+  .row-side{display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex:0 0 auto}
+
+  .tabbar{position:absolute;left:0;right:0;bottom:0;height:82px;background:rgba(20,18,15,.92);backdrop-filter:blur(18px);border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:flex-start;padding-top:12px;z-index:55}
+  .tab{display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:none;cursor:pointer;color:var(--muted);font-size:10.5px;font-weight:600;position:relative;padding:2px 12px}
+  .tab .ti{font-size:22px;filter:grayscale(1) opacity(.7);transition:.15s}
+  .tab.active{color:var(--accent)}
+  .tab.active .ti{filter:none}
+  .tab .dot{position:absolute;top:-2px;right:6px;background:var(--accent);color:#fff;font-size:10px;font-weight:800;min-width:17px;height:17px;border-radius:9px;display:none;align-items:center;justify-content:center;padding:0 4px}
+  .tab .dot.show{display:flex}
+
+  .sheet-bg{position:absolute;inset:0;background:rgba(0,0,0,.6);opacity:0;pointer-events:none;transition:.25s;z-index:70}
+  .sheet-bg.show{opacity:1;pointer-events:auto}
+  .sheet{position:absolute;left:0;right:0;bottom:0;background:var(--card);border-radius:28px 28px 0 0;padding:10px 22px 28px;transform:translateY(100%);transition:transform .3s cubic-bezier(.3,.9,.3,1);z-index:71;max-height:88%;overflow-y:auto}
+  .sheet.show{transform:none}
+  .sheet .grip{width:44px;height:5px;background:var(--line);border-radius:3px;margin:6px auto 16px}
+  .sheet .big-pic{position:relative;height:180px;border-radius:20px;font-size:76px;display:flex;align-items:center;justify-content:center;background:radial-gradient(120% 120% at 30% 20%,#3a332a,#1c1915);margin-bottom:16px}
+  .sheet h3{font-size:23px;font-weight:800}
+  .sheet .desc{color:var(--muted);font-size:14.5px;line-height:1.5;margin:10px 0 18px}
+
+  .toast{position:absolute;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--green);color:#fff;padding:12px 22px;border-radius:100px;font-weight:700;font-size:14px;opacity:0;pointer-events:none;transition:.3s;z-index:90;white-space:nowrap;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  .success{text-align:center;padding:40px 10px 10px}
+  .success .circle{width:96px;height:96px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:48px;margin:0 auto 22px;animation:pop .4s}
+  @keyframes pop{0%{transform:scale(.5);opacity:0}100%{transform:scale(1);opacity:1}}
+  .success h2{font-size:24px;margin-bottom:8px}
+
+  .status-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-top:20px;text-align:left}
+  .track{display:flex;flex-direction:column;gap:0;margin-top:8px}
+  .track .step{display:flex;gap:14px;align-items:flex-start;padding-bottom:22px;position:relative}
+  .track .step:last-child{padding-bottom:0}
+  .track .step .num{width:30px;height:30px;flex:0 0 30px;border-radius:50%;background:var(--card2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:14px;z-index:2}
+  .track .step.done .num{background:var(--green);border-color:var(--green)}
+  .track .step.cur .num{background:var(--accent);border-color:var(--accent);animation:pulse 1.4s infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(224,99,47,.5)}50%{box-shadow:0 0 0 8px rgba(224,99,47,0)}}
+  .track .step:not(:last-child)::after{content:"";position:absolute;left:15px;top:30px;bottom:0;width:2px;background:var(--line)}
+  .track .step.done:not(:last-child)::after{background:var(--green)}
+  .track .step .txt .a{font-weight:700;font-size:14.5px}
+  .track .step .txt .b{color:var(--muted);font-size:12.5px;margin-top:2px}
+</style>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+<div class="phone">
+  <div class="notch"></div>
+  <div class="statusbar"><span>9:41</span><div class="dots"><span>📶</span><span>📡</span><span>🔋</span></div></div>
+
+  <div class="viewport">
+
+    <!-- HOME -->
+    <section class="screen active" id="s-home">
+      <div class="topbar">
+        <div class="brand">
+          <div class="emblem">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 1.5l2.6 3.9 4.6-1.1-1.1 4.6L22 12l-3.9 2.6 1.1 4.6-4.6-1.1L12 22l-2.6-3.9-4.6 1.1 1.1-4.6L2 12l3.9-2.6L4.8 4.8l4.6 1.1L12 1.5z" fill="#fff" fill-opacity=".95"/><circle cx="12" cy="12" r="3.4" fill="#e0632f"/></svg>
+          </div>
+          <div class="bt"><span class="nm">MEHMON</span><span class="tg" id="brand-tag">Milliy taomlar · Toshkent</span></div>
+        </div>
+        <div class="lang">
+          <button id="lang-ru" class="active" onclick="setLang('ru')">RU</button>
+          <button id="lang-uz" onclick="setLang('uz')">UZ</button>
+        </div>
+      </div>
+
+      <div class="hero">
+        <div class="badge" id="hero-badge">⭐ 4.9 · Открыто до 23:00</div>
+        <div><h3 id="hero-title"></h3><p id="hero-sub"></p></div>
+      </div>
+
+      <div class="actions">
+        <div class="action" onclick="go('menu')"><div class="ico">🍚</div><div class="t" id="act-menu"></div></div>
+        <div class="action" onclick="go('booking')"><div class="ico">📅</div><div class="t" id="act-table"></div></div>
+        <div class="action" onclick="go('menu'); startDelivery()"><div class="ico">🛵</div><div class="t" id="act-delivery"></div></div>
+      </div>
+
+      <h2 id="home-pop-h"></h2>
+      <div id="home-pop"></div>
+    </section>
+
+    <!-- MENU -->
+    <section class="screen" id="s-menu">
+      <h1 id="menu-title"></h1>
+      <p class="sub" id="menu-mode-label"></p>
+      <div class="search">
+        <span class="si">🔍</span>
+        <input id="menu-search" oninput="onSearch(this.value)" autocomplete="off">
+        <button class="clr" id="search-clr" onclick="clearSearch()">✕</button>
+      </div>
+      <div class="chips" id="cats"></div>
+      <div id="menu-list"></div>
+    </section>
+
+    <!-- CART -->
+    <section class="screen" id="s-cart">
+      <h1 id="cart-title"></h1>
+      <div id="cart-body"></div>
+    </section>
+
+    <!-- BOOKING -->
+    <section class="screen" id="s-booking"></section>
+
+    <!-- PROFILE -->
+    <section class="screen" id="s-profile">
+      <h1 id="prof-title"></h1>
+      <div class="cart-row" style="margin-top:16px">
+        <div class="pic" style="border-radius:50%">😎</div>
+        <div><div class="n">Aziz</div><div class="p">+998 90 123 45 67</div></div>
+      </div>
+      <div class="status-card" style="margin-top:14px;display:flex;align-items:center;justify-content:space-between">
+        <span style="font-weight:700" id="prof-lang-label"></span>
+        <div class="lang">
+          <button id="lang-ru2" class="active" onclick="setLang('ru')">RU</button>
+          <button id="lang-uz2" onclick="setLang('uz')">UZ</button>
+        </div>
+      </div>
+      <h2 id="prof-bookings-h"></h2>
+      <div id="my-bookings"></div>
+      <h2 id="prof-orders-h"></h2>
+      <div id="my-orders"></div>
+    </section>
+
+  </div>
+
+  <div class="cta-wrap" id="cart-cta" style="display:none">
+    <button class="cta" onclick="go('cart')">
+      <span id="cta-count"></span><span>·</span><span id="cta-sum"></span>
+      <span style="margin-left:auto" id="cta-label"></span>
+    </button>
+  </div>
+
+  <div class="tabbar">
+    <button class="tab active" data-tab="home" onclick="go('home')"><span class="ti">🏠</span><span id="tab-home"></span></button>
+    <button class="tab" data-tab="menu" onclick="go('menu')"><span class="ti">🍽️</span><span id="tab-menu"></span></button>
+    <button class="tab" data-tab="cart" onclick="go('cart')"><span class="ti">🛒</span><span id="tab-cart"></span><span class="dot" id="tab-dot"></span></button>
+    <button class="tab" data-tab="booking" onclick="go('booking')"><span class="ti">📅</span><span id="tab-booking"></span></button>
+    <button class="tab" data-tab="profile" onclick="go('profile')"><span class="ti">👤</span><span id="tab-profile"></span></button>
+  </div>
+
+  <div class="sheet-bg" id="sheet-bg" onclick="closeSheet()"></div>
+  <div class="sheet" id="sheet">
+    <div class="grip"></div>
+    <div class="big-pic" id="sh-pic"><span id="sh-emoji">🍚</span><button class="fav-btn" id="sh-fav" onclick="toggleFav(sheetId)" style="top:12px;right:12px;width:38px;height:38px;font-size:18px">♡</button></div>
+    <h3 id="sh-name"></h3>
+    <div style="display:flex;gap:14px;color:var(--muted);font-size:13px;margin-top:8px">
+      <span id="sh-kcal"></span><span>·</span><span id="sh-weight"></span><span>·</span><span>⭐ 4.8</span>
+    </div>
+    <p class="desc" id="sh-desc"></p>
+    <div style="display:flex;align-items:center;gap:14px">
+      <div style="font-size:24px;font-weight:800" id="sh-price"></div>
+      <div id="sh-action" style="flex:1"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+/* ===================== I18N ===================== */
+const T = {
+  ru:{
+    brandTag:"Национальная кухня · Ташкент",
+    heroBadge:"⭐ 4.9 · Открыто до 23:00",
+    heroTitle:"Настоящая<br>узбекская кухня", heroSub:"Плов на дровах, шашлык на углях и самса из тандыра",
+    actMenu:"Меню", actTable:"Столик", actDelivery:"Доставка", popular:"Популярное сейчас",
+    tabHome:"Главная", tabMenu:"Меню", tabCart:"Корзина", tabBooking:"Столик", tabProfile:"Профиль",
+    menuTitle:"Меню", deliverySub:"Доставка · бесплатно от 150 000 сум", pickupSub:"Самовывоз · скидка 10%",
+    cartTitle:"Корзина", cartEmpty:"Корзина пуста", cartEmptySub:"Загляните в меню — там вкусно", openMenu:"Открыть меню",
+    delivery:"🛵 Доставка", pickup:"🏃 Самовывоз",
+    whereTo:"Куда везти", address:"Адрес", addressPh:"Улица, дом, квартира", entrance:"Подъезд", floor:"Этаж",
+    pickupCard:"Будет готово через ~25 минут. Скидка на самовывоз 10% уже применена.",
+    phone:"Телефон", payment:"Оплата",
+    dishesLine:"Блюда", deliveryLine:"Доставка", free:"Бесплатно", pickupDiscLine:"Скидка самовывоз", total:"Итого",
+    placeDelivery:"Оформить доставку", placePickup:"Оформить самовывоз",
+    bookTitle:"Бронь столика", bookAddr:"MEHMON · просп. Амира Темура, 15",
+    dateH:"Дата", timeH:"Время", guestsH:"Гостей", guestCount:"Количество гостей", zoneH:"Зона",
+    yourData:"Ваши данные", nameL:"Имя", namePh:"Как вас зовут", phonePh:"+998 __ ___ __ __",
+    wishes:"Пожелания (необязательно)", wishesPh:"Столик у окна, детский стул…", bookBtn:"Забронировать",
+    today:"Сегодня", tomorrow:"Завтра",
+    profTitle:"Профиль", langLabel:"Язык · Til", myBookings:"Мои брони", noBookings:"Пока нет броней",
+    myOrders:"Мои заказы", noOrders:"Пока нет заказов", active:"Активна", inWork:"В работе",
+    cancelBtn:"Отменить", bookedCancelledSt:"Отменена", orderCancelledSt:"Отменён",
+    bookingCancelled:"Бронь отменена", orderCancelled:"Заказ отменён",
+    bookedTitle:"Столик забронирован!", bookedWait:"ждём вас", guestsW:"Гостей", timeW:"Время", zoneW:"Зона",
+    smsNote:"Подтверждение отправлено по SMS. Отменить бронь можно за 2 часа.", toHome:"На главную", newBooking:"Новая бронь",
+    orderTitle:"Заказ принят!", statusTitle:"Статус заказа",
+    st1a:"Заказ принят", st1paid:"Оплата прошла успешно", st1cash:"Оплата при получении",
+    st2a:"Готовим на кухне", st2b:"Повар уже взялся за дело",
+    st3courier:"Курьер в пути", st3ready:"Ждёт на выдаче", st3b:"Пришлём уведомление",
+    st4delivered:"Доставлено", st4received:"Получено", st4b:"Приятного аппетита!",
+    ready:"Готово", paidAt:"Оплачено", cashCourier:"Наличными курьеру", cashPickup:"Наличными при получении",
+    addToCart:"Добавить в корзину", kcal:"ккал", toCart:"Корзина →", added:"Добавлено ✓",
+    searchPh:"Поиск блюд…", favCat:"Избранное", noResults:"Ничего не найдено", noFavs:"Пока нет избранного",
+    favAdded:"В избранном ♥", favRemoved:"Убрано из избранного",
+    floorH:"Этаж / зона", chooseTable:"Выберите стол на схеме",
+    floorNames:["Терраса","1 этаж","2 этаж","3 этаж"],
+    legFree:"Свободно", legBusy:"Занято", legSel:"Выбран",
+    tableWord:"Стол", tapHint:"Нажмите на свободный стол", pickTableWarn:"Сначала выберите стол на схеме",
+    decorEntrance:"вход", decorBar:"бар", decorKitchen:"кухня", decorRail:"перила · вид на сад", decorStage:"сцена", decorWindows:"панорамные окна", decorWC:"санузел",
+    posForms:["позиция","позиции","позиций"], dishForms:["блюдо","блюда","блюд"], guestForms:["гость","гостя","гостей"], seatForms:["место","места","мест"],
+    cur:"сум"
+  },
+  uz:{
+    brandTag:"Milliy taomlar · Toshkent",
+    heroBadge:"⭐ 4.9 · 23:00 gacha ochiq",
+    heroTitle:"Haqiqiy<br>o'zbek taomlari", heroSub:"O'tinda pishgan palov, cho'g'da shashlik va tandir somsa",
+    actMenu:"Menyu", actTable:"Stol", actDelivery:"Yetkazish", popular:"Hozir ommabop",
+    tabHome:"Asosiy", tabMenu:"Menyu", tabCart:"Savat", tabBooking:"Stol", tabProfile:"Profil",
+    menuTitle:"Menyu", deliverySub:"Yetkazish · 150 000 so'mdan bepul", pickupSub:"Olib ketish · 10% chegirma",
+    cartTitle:"Savat", cartEmpty:"Savat bo'sh", cartEmptySub:"Menyuga qarang — u yerda mazali", openMenu:"Menyuni ochish",
+    delivery:"🛵 Yetkazish", pickup:"🏃 Olib ketish",
+    whereTo:"Manzil", address:"Manzil", addressPh:"Ko'cha, uy, xonadon", entrance:"Kirish", floor:"Qavat",
+    pickupCard:"~25 daqiqada tayyor bo'ladi. Olib ketishga 10% chegirma qo'llanildi.",
+    phone:"Telefon", payment:"To'lov",
+    dishesLine:"Taomlar", deliveryLine:"Yetkazish", free:"Bepul", pickupDiscLine:"Olib ketish chegirmasi", total:"Jami",
+    placeDelivery:"Yetkazishga rasmiylashtirish", placePickup:"Olib ketishga rasmiylashtirish",
+    bookTitle:"Stol band qilish", bookAddr:"MEHMON · Amir Temur ko'chasi, 15",
+    dateH:"Sana", timeH:"Vaqt", guestsH:"Mehmonlar", guestCount:"Mehmonlar soni", zoneH:"Zona",
+    yourData:"Ma'lumotlaringiz", nameL:"Ism", namePh:"Ismingiz", phonePh:"+998 __ ___ __ __",
+    wishes:"Istaklar (ixtiyoriy)", wishesPh:"Deraza yonida, bolalar stuli…", bookBtn:"Band qilish",
+    today:"Bugun", tomorrow:"Ertaga",
+    profTitle:"Profil", langLabel:"Язык · Til", myBookings:"Mening bandlovlarim", noBookings:"Hozircha bandlov yo'q",
+    myOrders:"Mening buyurtmalarim", noOrders:"Hozircha buyurtma yo'q", active:"Faol", inWork:"Jarayonda",
+    cancelBtn:"Bekor qilish", bookedCancelledSt:"Bekor qilingan", orderCancelledSt:"Bekor qilingan",
+    bookingCancelled:"Bandlov bekor qilindi", orderCancelled:"Buyurtma bekor qilindi",
+    bookedTitle:"Stol band qilindi!", bookedWait:"kutamiz", guestsW:"Mehmonlar", timeW:"Vaqt", zoneW:"Zona",
+    smsNote:"Tasdiq SMS orqali yuborildi. Bandlovni 2 soat oldin bekor qilish mumkin.", toHome:"Bosh sahifa", newBooking:"Yangi bandlov",
+    orderTitle:"Buyurtma qabul qilindi!", statusTitle:"Buyurtma holati",
+    st1a:"Buyurtma qabul qilindi", st1paid:"To'lov muvaffaqiyatli o'tdi", st1cash:"To'lov qabul qilishda",
+    st2a:"Oshxonada tayyorlanmoqda", st2b:"Oshpaz ishga kirishdi",
+    st3courier:"Kuryer yo'lda", st3ready:"Berishga tayyor", st3b:"Xabar yuboramiz",
+    st4delivered:"Yetkazildi", st4received:"Qabul qilindi", st4b:"Yoqimli ishtaha!",
+    ready:"Tayyor", paidAt:"To'landi", cashCourier:"Kuryerga naqd", cashPickup:"Olishda naqd",
+    addToCart:"Savatga qo'shish", kcal:"kkal", toCart:"Savat →", added:"Qo'shildi ✓",
+    searchPh:"Taom qidirish…", favCat:"Sevimli", noResults:"Hech narsa topilmadi", noFavs:"Sevimlilar hozircha yo'q",
+    favAdded:"Sevimlida ♥", favRemoved:"Sevimlidan olindi",
+    floorH:"Qavat / zona", chooseTable:"Sxemadan stolni tanlang",
+    floorNames:["Ayvon","1-qavat","2-qavat","3-qavat"],
+    legFree:"Bo'sh", legBusy:"Band", legSel:"Tanlangan",
+    tableWord:"Stol", tapHint:"Bo'sh stolni bosing", pickTableWarn:"Avval sxemadan stolni tanlang",
+    decorEntrance:"kirish", decorBar:"bar", decorKitchen:"oshxona", decorRail:"panjara · bog' manzarasi", decorStage:"sahna", decorWindows:"panoramali oynalar", decorWC:"hojatxona",
+    posForms:["ta pozitsiya"], dishForms:["ta taom"], guestForms:["ta mehmon"], seatForms:["o'rin"],
+    cur:"so'm"
+  }
+};
+let lang = "ru";
+function t(k){ return T[lang][k] ?? T.ru[k] ?? k; }
+function money(n){ return n.toLocaleString('ru-RU') + ' ' + t('cur'); }
+function pluralRu(n,f){const a=n%10,b=n%100;if(a===1&&b!==11)return f[0];if(a>=2&&a<=4&&(b<10||b>=20))return f[1];return f[2];}
+function pl(n,forms){ return lang==='ru' ? pluralRu(n,forms) : forms[0]; }
+
+/* ===================== DATA ===================== */
+const MENU = [
+  {id:1, cat:0, pic:"🍚", price:45000, kcal:720, w:{ru:"400 г",uz:"400 g"},
+   name:{ru:"Тошкентский плов",uz:"Toshkent palovi"},
+   desc:{ru:"Классический плов на хлопковом масле, рис девзира, говядина, жёлтая морковь и зира.",uz:"Paxta yog'ida pishgan klassik palov, devzira guruch, mol go'shti, sariq sabzi va zira."}},
+  {id:2, cat:0, pic:"🍚", price:65000, kcal:850, w:{ru:"450 г",uz:"450 g"},
+   name:{ru:"Тўй палов с казы",uz:"To'y palovi (qazi bilan)"},
+   desc:{ru:"Праздничный плов с казы, перепелиным яйцом, нутом и изюмом.",uz:"Qazi, bedana tuxumi, no'xat va mayiz bilan to'y palovi."}},
+  {id:3, cat:1, pic:"🍢", price:32000, kcal:480, w:{ru:"220 г",uz:"220 g"},
+   name:{ru:"Шашлык из баранины",uz:"Qo'y go'shti shashlik"},
+   desc:{ru:"Сочная баранина на углях, маринованный лук, лепёшка и острый соус.",uz:"Cho'g'da pishgan sershira qo'y go'shti, tuzlangan piyoz, non va achchiq sous."}},
+  {id:4, cat:1, pic:"🍢", price:28000, kcal:520, w:{ru:"200 г",uz:"200 g"},
+   name:{ru:"Люля-кебаб",uz:"Lyula-kabob"},
+   desc:{ru:"Рубленое мясо с курдючным жиром и специями, на мангале до румяной корочки.",uz:"Dumba yog'i va ziravorlar bilan qiyma go'sht, mangalda qizarguncha."}},
+  {id:5, cat:2, pic:"🍜", price:35000, kcal:540, w:{ru:"450 г",uz:"450 g"},
+   name:{ru:"Лагман",uz:"Lag'mon"},
+   desc:{ru:"Тянутая лапша ручной работы, наваристый бульон, говядина и болгарский перец.",uz:"Qo'lda cho'zilgan ugra, to'yimli sho'rva, mol go'shti va bulg'or qalampiri."}},
+  {id:6, cat:2, pic:"🥣", price:32000, kcal:410, w:{ru:"400 г",uz:"400 g"},
+   name:{ru:"Шурпа",uz:"Sho'rva"},
+   desc:{ru:"Ароматный суп на баранине с крупными овощами и зеленью.",uz:"Qo'y go'shtida yirik sabzavotlar va ko'katlar bilan xushbo'y sho'rva."}},
+  {id:7, cat:3, pic:"🥟", price:32000, kcal:600, w:{ru:"320 г (4 шт)",uz:"320 g (4 dona)"},
+   name:{ru:"Манты",uz:"Manti"},
+   desc:{ru:"Сочные манты на пару с рубленой говядиной и луком. Со сметаной.",uz:"Bug'da pishgan sershira manti, qiyma go'sht va piyoz bilan. Smetana bilan."}},
+  {id:8, cat:3, pic:"🥟", price:12000, kcal:380, w:{ru:"180 г",uz:"180 g"},
+   name:{ru:"Самса из тандыра",uz:"Tandir somsa"},
+   desc:{ru:"Слоёная самса из тандыра с мясом и луком. Хрустящая корочка.",uz:"Go'sht va piyoz bilan tandirda pishgan qatlama somsa."}},
+  {id:9, cat:3, pic:"🥟", price:30000, kcal:430, w:{ru:"350 г",uz:"350 g"},
+   name:{ru:"Чучвара",uz:"Chuchvara"},
+   desc:{ru:"Маленькие пельмешки в бульоне или обжаренные, с уксусом и зеленью.",uz:"Sho'rvada yoki qovurilgan mayda chuchvara, sirka va ko'kat bilan."}},
+  {id:10, cat:4, pic:"🍖", price:55000, kcal:690, w:{ru:"350 г",uz:"350 g"},
+   name:{ru:"Тандыр гўшт",uz:"Tandir go'sht"},
+   desc:{ru:"Баранина, томлённая в тандыре до мягкости, с луком и лепёшкой.",uz:"Tandirda yumshoq bo'lguncha pishgan qo'y go'shti, piyoz va non bilan."}},
+  {id:11, cat:5, pic:"🥗", price:18000, kcal:120, w:{ru:"250 г",uz:"250 g"},
+   name:{ru:"Ачик-чучук",uz:"Achchiq-chuchuk"},
+   desc:{ru:"Свежие томаты, тонкий лук, острый перец и базилик. К шашлыку.",uz:"Yangi pomidor, yupqa piyoz, achchiq qalampir va rayhon. Shashlikka."}},
+  {id:12, cat:5, pic:"🥗", price:28000, kcal:340, w:{ru:"240 г",uz:"240 g"},
+   name:{ru:"Салат «Тошкент»",uz:"«Toshkent» salati"},
+   desc:{ru:"Отварная говядина, редька, лук и яйцо, заправка на майонезе.",uz:"Qaynatilgan mol go'shti, turp, piyoz va tuxum, mayonez bilan."}},
+  {id:13, cat:6, pic:"🍯", price:20000, kcal:420, w:{ru:"180 г",uz:"180 g"},
+   name:{ru:"Чак-чак",uz:"Chak-chak"},
+   desc:{ru:"Хрустящее тесто в медовом сиропе. К чаю самое то.",uz:"Asal sharbatidagi qarsildoq xamir. Choyga juda mos."}},
+  {id:14, cat:7, pic:"🫖", price:10000, kcal:5, w:{ru:"чайник 1 л",uz:"choynak 1 l"},
+   name:{ru:"Кўк чой",uz:"Ko'k choy"},
+   desc:{ru:"Зелёный чай в чайнике — как в настоящей чайхане.",uz:"Choynakda ko'k choy — haqiqiy choyxonadagidek."}},
+  {id:15, cat:7, pic:"🥛", price:10000, kcal:90, w:{ru:"300 мл",uz:"300 ml"},
+   name:{ru:"Айран",uz:"Ayron"},
+   desc:{ru:"Освежающий кисломолочный напиток. К плову и шашлыку.",uz:"Salqin qatiq ichimlik. Palov va shashlikka."}},
+];
+const CAT_KEYS = {
+  ru:["Популярное","Плов","Шашлык","Первое","Тесто","Гриль","Салаты","Десерты","Напитки"],
+  uz:["Ommabop","Palov","Shashlik","Sho'rvalar","Xamir","Gril","Salatlar","Shirinliklar","Ichimliklar"]
+};
+// cat index in dish maps to CAT_KEYS[lang][index+1] (0 = first real category "Плов")
+const POPULAR = [1,3,5,7];
+const PAYMENTS = [
+  {id:"payme", name:"Payme",       logo:"P",  color:"#33cccc"},
+  {id:"click", name:"Click",       logo:"C",  color:"#00a5e5"},
+  {id:"card",  name:{ru:"Uzcard/Humo",uz:"Uzcard/Humo"}, logo:"💳", color:"#2b6cb0"},
+  {id:"cash",  name:{ru:"Наличные",uz:"Naqd pul"}, logo:"💵", color:"#3d7a44"},
+];
+function payName(p){ return typeof p.name==='string' ? p.name : p.name[lang]; }
+
+/* ===== Seating types (colors + labels) ===== */
+const TYPES = {
+  round:  {c:{fill:"#cfe6f5",stroke:"#7fb2d4"}, ru:"Стандартный стол", uz:"Oddiy stol"},
+  booth:  {c:{fill:"#cfe8cf",stroke:"#7bb47b"}, ru:"Диван-кабинка",    uz:"Divan-kabina"},
+  private:{c:{fill:"#f6d3de",stroke:"#d98fa8"}, ru:"Отдельный кабинет",uz:"Alohida xona"},
+  soft:   {c:{fill:"#efe0c6",stroke:"#cbb48a"}, ru:"Мягкая зона",      uz:"Yumshoq zona"},
+};
+function typeLabel(k){ return lang==='ru'?TYPES[k].ru:TYPES[k].uz; }
+
+/* ===== Floors: coords in a 480x360 SVG viewBox ===== */
+const FLOORS = [
+  { id:0, tables:[ // Терраса — диваны + столы у сада
+      {n:1,type:"booth",seats:4,x:70,y:70},{n:2,type:"booth",seats:4,x:180,y:70,busy:true},
+      {n:3,type:"booth",seats:4,x:300,y:70},{n:4,type:"booth",seats:4,x:410,y:70},
+      {n:5,type:"round",seats:4,x:95,y:185},{n:6,type:"round",seats:4,x:190,y:185,busy:true},
+      {n:7,type:"round",seats:4,x:285,y:185},{n:8,type:"soft",seats:4,x:400,y:190},
+      {n:9,type:"round",seats:2,x:150,y:285},{n:10,type:"round",seats:6,x:300,y:285}]},
+  { id:1, tables:[ // 1 этаж — как на референсе
+      {n:11,type:"booth",seats:4,x:62,y:70},{n:12,type:"booth",seats:4,x:158,y:70,busy:true},
+      {n:13,type:"booth",seats:4,x:330,y:70},{n:14,type:"booth",seats:4,x:426,y:70},
+      {n:15,type:"private",seats:6,x:72,y:170},{n:16,type:"private",seats:6,x:72,y:240,busy:true},
+      {n:17,type:"round",seats:4,x:182,y:158},{n:18,type:"round",seats:4,x:258,y:158,busy:true},
+      {n:19,type:"round",seats:4,x:182,y:222},{n:20,type:"round",seats:4,x:258,y:222},
+      {n:21,type:"round",seats:4,x:182,y:286},{n:22,type:"round",seats:4,x:258,y:286},
+      {n:23,type:"soft",seats:4,x:412,y:150},{n:24,type:"soft",seats:4,x:412,y:222,busy:true}]},
+  { id:2, tables:[ // 2 этаж — панорамные окна
+      {n:31,type:"booth",seats:4,x:90,y:70},{n:32,type:"booth",seats:4,x:230,y:70,busy:true},{n:33,type:"booth",seats:4,x:370,y:70},
+      {n:34,type:"private",seats:6,x:72,y:180},{n:35,type:"private",seats:6,x:72,y:255,busy:true},
+      {n:36,type:"round",seats:4,x:190,y:165},{n:37,type:"round",seats:4,x:265,y:165},
+      {n:38,type:"round",seats:4,x:190,y:235},{n:39,type:"round",seats:4,x:265,y:235,busy:true},
+      {n:40,type:"soft",seats:4,x:412,y:160},{n:41,type:"soft",seats:4,x:412,y:235},{n:42,type:"round",seats:6,x:225,y:305}]},
+  { id:3, tables:[ // 3 этаж — VIP, банкет
+      {n:51,type:"booth",seats:4,x:150,y:68},{n:52,type:"booth",seats:4,x:330,y:68,busy:true},
+      {n:53,type:"private",seats:6,x:72,y:160},{n:54,type:"private",seats:6,x:72,y:240},
+      {n:55,type:"private",seats:6,x:410,y:160,busy:true},{n:56,type:"private",seats:6,x:410,y:240},
+      {n:57,type:"round",seats:8,x:240,y:185},{n:58,type:"round",seats:4,x:240,y:300}]},
+];
+function findAllTables(){ return FLOORS.flatMap(f=>f.tables); }
+
+/* ===== SVG drawing helpers ===== */
+function palette(u,state){
+  if(state==='busy') return {fill:"#e3e1dd",stroke:"#b3aea6"};
+  if(state==='sel')  return {fill:"#f6a97f",stroke:"#e0632f"};
+  return TYPES[u.type].c;
+}
+function numFill(state){ return state==='busy'?"#8a857d":state==='sel'?"#5a2410":"#4a4038"; }
+function chair(cx,cy,w,h,rot,col){ return `<rect x="${(cx-w/2).toFixed(1)}" y="${(cy-h/2).toFixed(1)}" width="${w}" height="${h}" rx="3" transform="rotate(${rot.toFixed(1)} ${cx.toFixed(1)} ${cy.toFixed(1)})" fill="${col.fill}" stroke="${col.stroke}" stroke-width="1.4"/>`; }
+function numText(u,state){ return `<text x="${u.x}" y="${u.y}" text-anchor="middle" dominant-baseline="central" font-size="10" font-weight="800" fill="${numFill(state)}">${u.n}</text>`; }
+
+function roundSVG(u,col,state){
+  const tr = u.seats>=8?22 : u.seats>=6?18 : 14, gap=8, cr=tr+gap;
+  let s='';
+  for(let i=0;i<u.seats;i++){
+    const deg=-90+i*360/u.seats, a=deg*Math.PI/180;
+    s+=chair(u.x+Math.cos(a)*cr, u.y+Math.sin(a)*cr, 12, 8, deg+90, col);
+  }
+  s+=`<circle cx="${u.x}" cy="${u.y}" r="${tr}" fill="${col.fill}" stroke="${col.stroke}" stroke-width="2"/>`;
+  return s+numText(u,state);
+}
+function boothSVG(u,col,state){
+  const x=u.x,y=u.y;
+  let s=`<path d="M ${x-28} ${y+8} Q ${x} ${y-36} ${x+28} ${y+8}" fill="none" stroke="${col.stroke}" stroke-width="10" stroke-linecap="round"/>`;
+  s+=`<path d="M ${x-28} ${y+8} Q ${x} ${y-36} ${x+28} ${y+8}" fill="none" stroke="${col.fill}" stroke-width="6" stroke-linecap="round"/>`;
+  s+=`<ellipse cx="${x}" cy="${y+3}" rx="17" ry="10" fill="${col.fill}" stroke="${col.stroke}" stroke-width="2"/>`;
+  return s+`<text x="${x}" y="${y+3}" text-anchor="middle" dominant-baseline="central" font-size="10" font-weight="800" fill="${numFill(state)}">${u.n}</text>`;
+}
+function privateSVG(u,col,state){
+  const w=78,h=58,x=u.x-w/2,y=u.y-h/2;
+  let s=`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="4" fill="#ffffff88" stroke="#b3aea6" stroke-width="2"/>`;
+  s+=`<path d="M ${x+w} ${y+h-6} a 14 14 0 0 0 -14 -14" fill="none" stroke="#b3aea6" stroke-width="1.4"/>`; // door swing
+  for(const dx of [-16,0,16]){ s+=chair(u.x+dx,u.y-17,11,7,0,col); s+=chair(u.x+dx,u.y+17,11,7,180,col); }
+  s+=`<ellipse cx="${u.x}" cy="${u.y}" rx="20" ry="12" fill="${col.fill}" stroke="${col.stroke}" stroke-width="2"/>`;
+  return s+numText(u,state);
+}
+function ringSVG(u){
+  const map={round: u.seats>=8?34:u.seats>=6?30:26, soft:26, booth:34, private:44};
+  const rw = u.type==='private'?46:map[u.type]+8, rh = map[u.type]+8;
+  return `<rect x="${u.x-rw}" y="${u.y-rh}" width="${rw*2}" height="${rh*2}" rx="12" fill="#e0632f18" stroke="#e0632f" stroke-width="2.5"/>`;
+}
+
+/* ===== Decor per floor (drawn on top of walls) ===== */
+function plant(x,y){ return `<text x="${x}" y="${y}" font-size="13" fill="#4c9a4c" font-weight="900">✳</text>`; }
+function label(x,y,txt,size){ return `<text x="${x}" y="${y}" text-anchor="middle" font-size="${size||10}" font-weight="700" fill="#8a857d" letter-spacing=".5">${txt}</text>`; }
+function entranceSVG(bottom){
+  const y = bottom?354:6;
+  const gapY = bottom?348:2, doorY0=bottom?348:12, sweep=bottom?1:0;
+  return `<rect x="212" y="${gapY}" width="56" height="12" fill="#f4f2ee"/>`+
+    `<g stroke="#9a958d" stroke-width="2" fill="none"><path d="M240 ${doorY0} A24 24 0 0 ${sweep} 216 ${bottom?324:36}"/><path d="M240 ${doorY0} A24 24 0 0 ${sweep?0:1} 264 ${bottom?324:36}"/></g>`;
+}
+function hostSVG(x,y){ return `<path d="M ${x+10} ${y-12} a14 14 0 1 0 0 24" fill="none" stroke="#e6a23c" stroke-width="6" stroke-linecap="round"/><circle cx="${x+14}" cy="${y}" r="3.5" fill="#e6a23c"/>`; }
+function kitchenSVG(){ return `<rect x="338" y="262" width="130" height="90" rx="4" fill="#dcd8d2" stroke="#b3aea6" stroke-width="2"/>`+label(403,312,t('decorKitchen').toUpperCase(),12); }
+function partition(x){ return `<rect x="${x-3}" y="122" width="6" height="180" rx="3" fill="#cfcbc4"/>`; }
+function wcSVG(){
+  let s=`<rect x="22" y="300" width="150" height="52" rx="3" fill="#eceae6" stroke="#c7c2ba" stroke-width="1.5"/>`;
+  s+=`<line x1="97" y1="300" x2="97" y2="352" stroke="#c7c2ba" stroke-width="1.5"/>`;
+  s+=label(60,329,"🚻 "+t('decorWC'),9)+label(135,329,"🚻",12);
+  return s;
+}
+function decorFor(id){
+  if(id===0) return entranceSVG(false)+hostSVG(360,45)+
+    `<rect x="14" y="330" width="452" height="16" rx="4" fill="#e6efe0" stroke="#bcd0b0" stroke-width="1.5"/>`+label(240,342,t('decorRail').toUpperCase(),9)+
+    plant(30,120)+plant(455,120)+plant(240,120)+plant(120,325)+plant(360,325)+plant(30,300)+plant(455,300);
+  if(id===1) return entranceSVG(false)+hostSVG(300,45)+partition(150)+partition(300)+kitchenSVG()+wcSVG()+
+    plant(150,120)+plant(305,120)+plant(462,120)+plant(462,240)+plant(340,255)+plant(120,150);
+  if(id===2) return entranceSVG(false)+hostSVG(300,45)+partition(155)+kitchenSVG()+
+    `<rect x="14" y="14" width="452" height="10" rx="3" fill="#dfeaf4" stroke="#b7cadd" stroke-width="1.2"/>`+label(240,138,t('decorWindows').toUpperCase(),9)+
+    plant(150,120)+plant(320,120)+plant(462,120)+plant(120,300)+plant(360,300);
+  return entranceSVG(true)+ // floor 3 VIP
+    `<rect x="176" y="14" width="128" height="26" rx="5" fill="#efe3f0" stroke="#c9a9cc" stroke-width="1.5"/>`+label(240,30,t('decorStage').toUpperCase(),9)+
+    plant(30,120)+plant(455,120)+plant(150,320)+plant(330,320)+plant(240,260);
+}
+function dn(d){ return d.name[lang]; }
+function dd(d){ return d.desc[lang]; }
+function dw(d){ return d.w[lang]; }
+function catName(i){ return CAT_KEYS[lang][i]; }        // i: 0..8 (0=Популярное)
+function dishCat(d){ return catName(d.cat+1); }         // dish.cat 0 => index 1
+
+/* ===================== STATE ===================== */
+let cart = {};
+let mode = "delivery";
+let pay = "payme";
+let activeCat = 0;         // index into CAT_KEYS (0 = Популярное), or 'fav'
+let menuQuery = "";
+let favs = new Set();
+let sheetId = null;
+let booking = {date:null, time:null, guests:2, floor:0, table:null};
+let bkName = "";
+let myBookings = [];
+let myOrders = [];
+
+/* ===================== PERSISTENCE ===================== */
+function saveState(){
+  try{ localStorage.setItem('mehmon_v1', JSON.stringify({cart, lang, favs:[...favs], mode, pay, myBookings, myOrders})); }catch(e){}
+}
+function loadState(){
+  try{
+    const s = JSON.parse(localStorage.getItem('mehmon_v1'));
+    if(s){ cart=s.cart||{}; lang=s.lang||'ru'; favs=new Set(s.favs||[]); mode=s.mode||'delivery'; pay=s.pay||'payme'; myBookings=s.myBookings||[]; myOrders=s.myOrders||[]; }
+  }catch(e){}
+}
+
+/* ===================== NAV ===================== */
+function go(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s-'+name).classList.add('active');
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active', x.dataset.tab===name));
+  document.getElementById('s-'+name).scrollTop = 0;
+  if(name==='cart') renderCart();
+  if(name==='booking') renderBooking();
+  updateCTA();
+}
+function startDelivery(){ mode="delivery"; renderMenu(); }
+
+/* ===================== STATIC I18N ===================== */
+function applyStatic(){
+  document.documentElement.lang = lang;
+  document.getElementById('brand-tag').textContent = t('brandTag');
+  document.getElementById('hero-badge').textContent = t('heroBadge');
+  document.getElementById('hero-title').innerHTML = t('heroTitle');
+  document.getElementById('hero-sub').textContent = t('heroSub');
+  document.getElementById('act-menu').textContent = t('actMenu');
+  document.getElementById('act-table').textContent = t('actTable');
+  document.getElementById('act-delivery').textContent = t('actDelivery');
+  document.getElementById('home-pop-h').textContent = t('popular');
+  document.getElementById('menu-title').textContent = t('menuTitle');
+  document.getElementById('menu-search').placeholder = t('searchPh');
+  document.getElementById('cart-title').textContent = t('cartTitle');
+  document.getElementById('prof-title').textContent = t('profTitle');
+  document.getElementById('prof-lang-label').textContent = t('langLabel');
+  document.getElementById('prof-bookings-h').textContent = t('myBookings');
+  document.getElementById('prof-orders-h').textContent = t('myOrders');
+  document.getElementById('tab-home').textContent = t('tabHome');
+  document.getElementById('tab-menu').textContent = t('tabMenu');
+  document.getElementById('tab-cart').textContent = t('tabCart');
+  document.getElementById('tab-booking').textContent = t('tabBooking');
+  document.getElementById('tab-profile').textContent = t('tabProfile');
+  document.getElementById('cta-label').textContent = t('toCart');
+  renderMyBookings();
+  renderMyOrders();
+}
+function setLang(l){
+  lang = l;
+  ['lang-ru','lang-ru2'].forEach(id=>document.getElementById(id).classList.toggle('active', l==='ru'));
+  ['lang-uz','lang-uz2'].forEach(id=>document.getElementById(id).classList.toggle('active', l==='uz'));
+  saveState();
+  renderAll();
+}
+
+/* ===================== MENU ===================== */
+function renderCats(){
+  const favChip = `<div class="chip ${activeCat==='fav'?'active':''}" onclick="setCat('fav')">♥ ${t('favCat')}</div>`;
+  document.getElementById('cats').innerHTML = favChip + CAT_KEYS[lang]
+    .map((c,i)=>`<div class="chip ${i===activeCat?'active':''}" onclick="setCat(${i})">${c}</div>`).join('');
+}
+function setCat(i){
+  activeCat=i; menuQuery="";
+  const inp=document.getElementById('menu-search'); if(inp) inp.value="";
+  document.getElementById('search-clr').classList.remove('show');
+  renderCats(); renderMenu();
+}
+function onSearch(v){
+  menuQuery=v;
+  document.getElementById('search-clr').classList.toggle('show', v.length>0);
+  renderMenu();
+}
+function clearSearch(){
+  menuQuery="";
+  const inp=document.getElementById('menu-search'); if(inp) inp.value="";
+  document.getElementById('search-clr').classList.remove('show');
+  renderMenu();
+}
+function toggleFav(id){
+  if(id==null) return;
+  if(favs.has(id)){ favs.delete(id); toast(t('favRemoved')); }
+  else { favs.add(id); toast(t('favAdded')); }
+  saveState();
+  renderMenu(); renderHomePop();
+  if(document.getElementById('sheet').classList.contains('show')) renderSheetFav();
+}
+function dishCard(d){
+  const q = cart[d.id]||0;
+  const ctrl = q>0
+    ? `<div class="stepper"><button onclick="event.stopPropagation();chg(${d.id},-1)">−</button><span>${q}</span><button onclick="event.stopPropagation();chg(${d.id},1)">＋</button></div>`
+    : `<button class="add" onclick="event.stopPropagation();chg(${d.id},1)">＋</button>`;
+  const on = favs.has(d.id);
+  return `<div class="dish" onclick="openSheet(${d.id})">
+    <div class="pic">${d.pic}<button class="fav-btn ${on?'on':''}" onclick="event.stopPropagation();toggleFav(${d.id})">${on?'♥':'♡'}</button></div>
+    <div class="info"><div class="n">${dn(d)}</div><div class="d">${dd(d)}</div>
+      <div class="bottom"><span class="price">${money(d.price)}</span>${ctrl}</div></div></div>`;
+}
+function renderMenu(){
+  document.getElementById('menu-mode-label').textContent = mode==='delivery' ? t('deliverySub') : t('pickupSub');
+  const q = menuQuery.trim().toLowerCase();
+  let list, emptyIco='', emptyMsg='';
+  if(q){
+    list = MENU.filter(m=> dn(m).toLowerCase().includes(q) || dd(m).toLowerCase().includes(q) || dishCat(m).toLowerCase().includes(q));
+    if(!list.length){ emptyIco='🔍'; emptyMsg=t('noResults'); }
+  } else if(activeCat==='fav'){
+    list = MENU.filter(m=>favs.has(m.id));
+    if(!list.length){ emptyIco='🤍'; emptyMsg=t('noFavs'); }
+  } else if(activeCat===0){
+    list = POPULAR.map(id=>MENU.find(m=>m.id===id));
+  } else {
+    list = MENU.filter(m=>m.cat+1===activeCat);
+  }
+  document.getElementById('menu-list').innerHTML = emptyMsg
+    ? `<div class="empty"><div class="big">${emptyIco}</div>${emptyMsg}</div>`
+    : list.map(dishCard).join('');
+}
+function renderHomePop(){ document.getElementById('home-pop').innerHTML = POPULAR.map(id=>dishCard(MENU.find(m=>m.id===id))).join(''); }
+
+/* ===================== CART ===================== */
+function chg(id, delta){
+  cart[id] = (cart[id]||0) + delta;
+  if(cart[id]<=0) delete cart[id];
+  saveState();
+  renderMenu(); renderHomePop(); updateCTA();
+  if(document.getElementById('s-cart').classList.contains('active')) renderCart();
+  if(document.getElementById('sheet').classList.contains('show')) renderSheetAction();
+  if(delta>0) toast(t('added'));
+}
+function cartCount(){ return Object.values(cart).reduce((a,b)=>a+b,0); }
+function cartSum(){ return Object.entries(cart).reduce((s,[id,q])=>s+MENU.find(m=>m.id==id).price*q,0); }
+function updateCTA(){
+  const n = cartCount();
+  const dot = document.getElementById('tab-dot');
+  dot.textContent = n; dot.classList.toggle('show', n>0);
+  const onCart = document.getElementById('s-cart').classList.contains('active');
+  const onMenu = document.getElementById('s-menu').classList.contains('active');
+  const onHome = document.getElementById('s-home').classList.contains('active');
+  document.getElementById('cart-cta').style.display = (n>0 && (onMenu||onHome)) ? 'block' : 'none';
+  document.getElementById('cta-count').textContent = n + ' ' + pl(n, t('posForms'));
+  document.getElementById('cta-sum').textContent = money(cartSum());
+  document.getElementById('cta-label').textContent = t('toCart');
+}
+function renderCart(){
+  const body = document.getElementById('cart-body');
+  if(cartCount()===0){
+    body.innerHTML = `<div class="empty"><div class="big">🛒</div><div style="font-weight:700;color:var(--text);font-size:17px">${t('cartEmpty')}</div><p style="margin-top:6px">${t('cartEmptySub')}</p><button class="btn-block" style="margin-top:22px;max-width:220px;margin-left:auto;margin-right:auto" onclick="go('menu')">${t('openMenu')}</button></div>`;
+    return;
+  }
+  const rows = Object.entries(cart).map(([id,q])=>{
+    const d = MENU.find(m=>m.id==id);
+    return `<div class="cart-row"><div class="pic">${d.pic}</div>
+      <div style="flex:1"><div class="n">${dn(d)}</div><div class="p">${money(d.price)}</div></div>
+      <div class="stepper"><button onclick="chg(${d.id},-1)">−</button><span>${q}</span><button onclick="chg(${d.id},1)">＋</button></div></div>`;
+  }).join('');
+  const sum = cartSum();
+  const deliveryFee = mode==='delivery' ? (sum>=150000?0:15000) : 0;
+  const discount = mode==='pickup' ? Math.round(sum*0.1) : 0;
+  const total = sum + deliveryFee - discount;
+
+  body.innerHTML = `
+    <div class="seg">
+      <button class="${mode==='delivery'?'active':''}" onclick="setMode('delivery')">${t('delivery')}</button>
+      <button class="${mode==='pickup'?'active':''}" onclick="setMode('pickup')">${t('pickup')}</button>
+    </div>
+    ${rows}
+    ${mode==='delivery' ? `
+      <h2>${t('whereTo')}</h2>
+      <div class="field"><label>${t('address')}</label><input placeholder="${t('addressPh')}"></div>
+      <div class="grid2">
+        <div class="field"><label>${t('entrance')}</label><input placeholder="—"></div>
+        <div class="field"><label>${t('floor')}</label><input placeholder="—"></div>
+      </div>` : `
+      <div class="status-card" style="margin-top:16px">
+        <div style="font-weight:700">📍 ${t('bookAddr')}</div>
+        <div class="muted" style="font-size:13px;margin-top:6px">${t('pickupCard')}</div>
+      </div>`}
+    <div class="field" style="margin-top:14px"><label>${t('phone')}</label><input placeholder="${t('phonePh')}" inputmode="tel"></div>
+
+    <h2>${t('payment')}</h2>
+    <div class="pay-grid">
+      ${PAYMENTS.map(p=>`<div class="pay ${pay===p.id?'active':''}" onclick="setPay('${p.id}')">
+        <div class="pay-ico" style="background:${p.color}">${p.logo}</div>
+        <div class="pay-t">${payName(p)}</div>${pay===p.id?'<div class="pay-check">✓</div>':''}</div>`).join('')}
+    </div>
+
+    <div class="summary">
+      <div class="sline"><span>${t('dishesLine')} (${cartCount()})</span><span>${money(sum)}</span></div>
+      ${mode==='delivery' ? `<div class="sline"><span>${t('deliveryLine')}</span><span>${deliveryFee===0?t('free'):money(deliveryFee)}</span></div>` : ''}
+      ${discount>0 ? `<div class="sline" style="color:var(--green)"><span>${t('pickupDiscLine')}</span><span>−${money(discount)}</span></div>` : ''}
+      <div class="sline total"><span>${t('total')}</span><span>${money(total)}</span></div>
+    </div>
+    <button class="btn-block" style="margin-top:16px" onclick="placeOrder(${total})">
+      ${mode==='delivery'?t('placeDelivery'):t('placePickup')} · ${money(total)}
+    </button>
+    <div style="height:10px"></div>`;
+}
+function setMode(m){ mode=m; saveState(); renderCart(); renderMenu(); }
+function setPay(p){ pay=p; saveState(); renderCart(); }
+
+/* ===================== SHEET ===================== */
+function openSheet(id){
+  sheetId = id;
+  const d = MENU.find(m=>m.id===id);
+  document.getElementById('sh-emoji').textContent = d.pic;
+  document.getElementById('sh-name').textContent = dn(d);
+  document.getElementById('sh-desc').textContent = dd(d);
+  document.getElementById('sh-price').textContent = money(d.price);
+  document.getElementById('sh-kcal').textContent = d.kcal+' '+t('kcal');
+  document.getElementById('sh-weight').textContent = dw(d);
+  renderSheetAction();
+  renderSheetFav();
+  document.getElementById('sheet-bg').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+}
+function renderSheetAction(){
+  const el = document.getElementById('sh-action');
+  if(!el || sheetId==null) return;
+  const q = cart[sheetId]||0;
+  el.innerHTML = q>0
+    ? `<div class="stepper" style="justify-content:space-between;padding:6px 8px">
+         <button style="width:40px;height:40px;border-radius:11px;font-size:20px" onclick="chg(${sheetId},-1)">−</button>
+         <span style="font-size:17px">${q}</span>
+         <button style="width:40px;height:40px;border-radius:11px;font-size:20px" onclick="chg(${sheetId},1)">＋</button>
+       </div>`
+    : `<button class="cta" style="position:static;box-shadow:none;width:100%" onclick="chg(${sheetId},1)">${t('addToCart')}</button>`;
+}
+function renderSheetFav(){
+  const b = document.getElementById('sh-fav');
+  if(!b || sheetId==null) return;
+  const on = favs.has(sheetId);
+  b.textContent = on?'♥':'♡';
+  b.classList.toggle('on', on);
+}
+function closeSheet(){ document.getElementById('sheet-bg').classList.remove('show'); document.getElementById('sheet').classList.remove('show'); }
+
+/* ===================== TOAST ===================== */
+let toastT;
+function toast(msg){ const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove('show'),1400); }
+
+/* ===================== BOOKING ===================== */
+function findTable(n){ for(const f of FLOORS){ const tb=f.tables.find(x=>x.n===n); if(tb) return {tb, floor:f.id}; } return null; }
+
+function renderBooking(){
+  const days = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+  const now = new Date('2026-07-30');
+  let dh='';
+  for(let i=0;i<6;i++){
+    const dt = new Date(now); dt.setDate(now.getDate()+i);
+    const lbl = i===0?t('today'):i===1?t('tomorrow'):`${days[dt.getDay()]} ${dt.getDate()}`;
+    const key = dt.toISOString().slice(0,10);
+    if(i===0 && !booking.date) booking.date=key;
+    dh += `<div class="pill ${booking.date===key?'active':''}" onclick="pickDate('${key}')">${lbl}</div>`;
+  }
+  const times = ['12:00','13:30','15:00','17:30','18:00','19:00','19:30','20:00','21:00'];
+  if(!booking.time) booking.time='19:00';
+  const th = times.map(x=>`<div class="pill ${booking.time===x?'active':''}" onclick="pickTime('${x}')">${x}</div>`).join('');
+  const fh = T[lang].floorNames.map((z,i)=>`<div class="pill ${booking.floor===i?'active':''}" onclick="setFloor(${i})">${z}</div>`).join('');
+
+  document.getElementById('s-booking').innerHTML = `
+    <h1>${t('bookTitle')}</h1><p class="sub">${t('bookAddr')}</p>
+    <h2>${t('dateH')}</h2><div class="pill-row">${dh}</div>
+    <h2>${t('timeH')}</h2><div class="pill-row">${th}</div>
+    <h2>${t('guestsH')}</h2>
+    <div class="guest"><span style="font-weight:700">${t('guestCount')}</span>
+      <div class="g-ctl"><button onclick="guests(-1)">−</button><span id="guest-n">${booking.guests}</span><button onclick="guests(1)">＋</button></div></div>
+    <h2>${t('floorH')}</h2><div class="pill-row" id="floor-pills">${fh}</div>
+    <div style="font-size:13px;color:var(--muted);margin:12px 2px 0">${t('chooseTable')}</div>
+    <div class="plan" id="floor-plan"></div>
+    <div class="legend">
+      <span><i style="background:${TYPES.round.c.fill};border-color:${TYPES.round.c.stroke}"></i>${typeLabel('round')}</span>
+      <span><i style="background:${TYPES.booth.c.fill};border-color:${TYPES.booth.c.stroke}"></i>${typeLabel('booth')}</span>
+      <span><i style="background:${TYPES.private.c.fill};border-color:${TYPES.private.c.stroke}"></i>${typeLabel('private')}</span>
+      <span><i style="background:${TYPES.soft.c.fill};border-color:${TYPES.soft.c.stroke}"></i>${typeLabel('soft')}</span>
+      <span><i style="background:#e3e1dd;border-color:#b3aea6"></i>${t('legBusy')}</span>
+      <span><i style="background:#f6a97f;border-color:#e0632f"></i>${t('legSel')}</span>
+    </div>
+    <div id="tbl-info"></div>
+    <h2>${t('yourData')}</h2>
+    <div class="field"><label>${t('nameL')}</label><input id="bk-name" value="${bkName.replace(/"/g,'&quot;')}" oninput="bkName=this.value" placeholder="${t('namePh')}"></div>
+    <div class="field"><label>${t('phone')}</label><input placeholder="${t('phonePh')}" inputmode="tel"></div>
+    <div class="field"><label>${t('wishes')}</label><textarea rows="2" placeholder="${t('wishesPh')}"></textarea></div>
+    <div style="height:16px"></div>
+    <button class="btn-block" onclick="confirmBooking()">${t('bookBtn')}</button>`;
+  renderPlan(); updateTblInfo();
+}
+function renderPlan(){
+  const f = FLOORS[booking.floor];
+  let ts='';
+  for(const u of f.tables){
+    const state = u.busy ? 'busy' : (booking.table===u.n ? 'sel' : 'free');
+    const col = palette(u,state);
+    const draw = u.type==='booth' ? boothSVG(u,col,state) : u.type==='private' ? privateSVG(u,col,state) : roundSVG(u,col,state);
+    const ring = state==='sel' ? ringSVG(u) : '';
+    const g = u.busy
+      ? `<g opacity="0.7">${draw}</g>`
+      : `<g data-free="1" style="cursor:pointer" onclick="selectTable(${u.n})">${ring}${draw}</g>`;
+    ts += g;
+  }
+  document.getElementById('floor-plan').innerHTML =
+    `<svg viewBox="0 0 480 360" xmlns="http://www.w3.org/2000/svg">
+       <rect x="6" y="6" width="468" height="348" rx="14" fill="#f4f2ee"/>
+       <path d="M6 40 H474 M6 90 H474 M6 140 H474 M6 190 H474 M6 240 H474 M6 290 H474 M60 6 V354 M120 6 V354 M180 6 V354 M240 6 V354 M300 6 V354 M360 6 V354 M420 6 V354" stroke="#000" stroke-opacity="0.03" stroke-width="1"/>
+       <rect x="6" y="6" width="468" height="348" rx="14" fill="none" stroke="#9a958d" stroke-width="6"/>
+       ${decorFor(booking.floor)}
+       ${ts}
+     </svg>`;
+}
+function updateTblInfo(){
+  const el = document.getElementById('tbl-info');
+  if(!el) return;
+  if(booking.table==null){ el.className='tbl-info off'; el.innerHTML = `🪑 ${t('tapHint')}`; return; }
+  const {tb} = findTable(booking.table);
+  const floorName = T[lang].floorNames[booking.floor];
+  el.className='tbl-info on';
+  el.innerHTML = `<div class="badge-n">№${tb.n}</div><div><div style="font-weight:700">${typeLabel(tb.type)} · №${tb.n}</div><div class="muted" style="font-size:12.5px">${floorName} · ${tb.seats} ${pl(tb.seats,t('seatForms'))}</div></div>`;
+}
+function setFloor(i){ booking.floor=i; booking.table=null; renderBooking(); }
+function selectTable(n){ booking.table=n; renderPlan(); updateTblInfo(); }
+function pickDate(k){ booking.date=k; renderBooking(); }
+function pickTime(x){ booking.time=x; renderBooking(); }
+function guests(d){ booking.guests=Math.max(1,Math.min(12,booking.guests+d)); document.getElementById('guest-n').textContent=booking.guests; }
+function confirmBooking(){
+  if(booking.table==null){ toast(t('pickTableWarn')); document.getElementById('floor-plan').scrollIntoView({behavior:'smooth',block:'center'}); return; }
+  const name = (bkName||'').trim() || (lang==='ru'?'Гость':'Mehmon');
+  const dateLabel = booking.date==='2026-07-30' ? t('today') : booking.date;
+  const floorName = T[lang].floorNames[booking.floor];
+  const {tb} = findTable(booking.table);
+  const tableLabel = `${t('tableWord')} №${tb.n} · ${floorName}`;
+  document.getElementById('s-booking').innerHTML = `
+    <div class="success">
+      <div class="circle">✓</div><h2>${t('bookedTitle')}</h2>
+      <p class="muted">${name}, ${t('bookedWait')} ${dateLabel} · ${booking.time}</p>
+      <div class="status-card" style="text-align:center">
+        <div style="display:flex;justify-content:space-around">
+          <div><div class="muted" style="font-size:12px">${t('guestsW')}</div><div style="font-weight:800;font-size:20px;margin-top:4px">${booking.guests}</div></div>
+          <div><div class="muted" style="font-size:12px">${t('timeW')}</div><div style="font-weight:800;font-size:20px;margin-top:4px">${booking.time}</div></div>
+          <div><div class="muted" style="font-size:12px">${t('tableWord')}</div><div style="font-weight:800;font-size:15px;margin-top:8px">№${tb.n}</div></div>
+        </div>
+        <div class="muted" style="font-size:12px;margin-top:10px">${floorName}</div>
+        <div class="muted" style="font-size:12.5px;margin-top:12px;border-top:1px solid var(--line);padding-top:12px">${t('smsNote')}</div>
+      </div>
+      <button class="btn-block" style="margin-top:20px" onclick="go('home')">${t('toHome')}</button>
+      <button class="btn-block btn-ghost" style="margin-top:10px" onclick="newBooking()">${t('newBooking')}</button>
+    </div>`;
+  myBookings.unshift({ id:Date.now(), tb:{n:tb.n,type:tb.type,seats:tb.seats}, floor:booking.floor, dateKey:booking.date, time:booking.time, guests:booking.guests, status:'active' });
+  saveState(); renderMyBookings();
+}
+function newBooking(){ booking.table=null; bkName=""; renderBooking(); }
+function renderMyBookings(){
+  const el = document.getElementById('my-bookings');
+  if(!el) return;
+  if(!myBookings.length){ el.innerHTML = `<div class="empty" style="padding:30px"><div class="big">📅</div>${t('noBookings')}</div>`; return; }
+  el.innerHTML = myBookings.map(b=>{
+    const floorName = T[lang].floorNames[b.floor];
+    const dateLabel = b.dateKey==='2026-07-30' ? t('today') : b.dateKey;
+    const side = b.status==='cancelled'
+      ? `<span class="muted" style="font-size:12px;font-weight:700">${t('bookedCancelledSt')}</span>`
+      : `<div class="row-side"><span style="color:var(--green);font-weight:700;font-size:12px">${t('active')}</span><button class="mini-cancel" onclick="cancelBooking(${b.id})">${t('cancelBtn')}</button></div>`;
+    return `<div class="cart-row" style="${b.status==='cancelled'?'opacity:.55;':''}"><div class="pic">📅</div>
+      <div style="flex:1;min-width:0"><div class="n">MEHMON · ${t('tableWord')} №${b.tb.n} · ${floorName}</div>
+      <div class="p">${dateLabel}, ${b.time} · ${b.guests} ${pl(b.guests,t('guestForms'))}</div></div>${side}</div>`;
+  }).join('');
+}
+function cancelBooking(id){
+  const b = myBookings.find(x=>x.id===id); if(!b || b.status==='cancelled') return;
+  b.status='cancelled'; saveState(); renderMyBookings(); toast(t('bookingCancelled'));
+}
+
+/* ===================== ORDER ===================== */
+function placeOrder(total){
+  const items = cartCount();
+  const modeLabel = mode==='delivery'?t('deliveryLine'):(lang==='ru'?'Самовывоз':'Olib ketish');
+  const payInfo = PAYMENTS.find(p=>p.id===pay);
+  const payLine = pay==='cash' ? (mode==='delivery'?t('cashCourier'):t('cashPickup')) : `${t('paidAt')} · ${payName(payInfo)}`;
+  myOrders.unshift({ id:Date.now(), mode, items, total, pay, status:'inWork' });
+  saveState(); renderMyOrders();
+  const eta = mode==='delivery' ? '40–50' : '25';
+  document.getElementById('cart-body').innerHTML = `
+    <div class="success"><div class="circle">✓</div><h2>${t('orderTitle')}</h2>
+      <p class="muted">${modeLabel} · ${money(total)} · ~${eta} ${lang==='ru'?'мин':'daq'}</p>
+      <div style="display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);padding:8px 14px;border-radius:100px;margin-top:12px;font-size:13px;font-weight:600">
+        <span style="width:22px;height:22px;border-radius:6px;background:${payInfo.color};color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800">${payInfo.logo}</span>${payLine}
+      </div>
+    </div>
+    <div class="status-card"><div style="font-weight:800;font-size:16px;margin-bottom:16px">${t('statusTitle')}</div>
+      <div class="track">
+        <div class="step done"><div class="num">✓</div><div class="txt"><div class="a">${t('st1a')}</div><div class="b">${pay==='cash'?t('st1cash'):t('st1paid')}</div></div></div>
+        <div class="step cur"><div class="num">2</div><div class="txt"><div class="a">${t('st2a')}</div><div class="b">${t('st2b')}</div></div></div>
+        <div class="step"><div class="num">3</div><div class="txt"><div class="a">${mode==='delivery'?t('st3courier'):t('st3ready')}</div><div class="b">${t('st3b')}</div></div></div>
+        <div class="step"><div class="num">4</div><div class="txt"><div class="a">${mode==='delivery'?t('st4delivered'):t('st4received')}</div><div class="b">${t('st4b')}</div></div></div>
+      </div>
+    </div>
+    <button class="btn-block" style="margin-top:20px" onclick="go('home')">${t('ready')}</button>`;
+  cart = {}; saveState(); updateCTA();
+}
+function renderMyOrders(){
+  const el = document.getElementById('my-orders');
+  if(!el) return;
+  if(!myOrders.length){ el.innerHTML = `<div class="empty" style="padding:30px"><div class="big">🧾</div>${t('noOrders')}</div>`; return; }
+  el.innerHTML = myOrders.map(o=>{
+    const modeLabel = o.mode==='delivery' ? t('deliveryLine') : (lang==='ru'?'Самовывоз':'Olib ketish');
+    const payInfo = PAYMENTS.find(p=>p.id===o.pay);
+    const side = o.status==='cancelled'
+      ? `<span class="muted" style="font-size:12px;font-weight:700">${t('orderCancelledSt')}</span>`
+      : `<div class="row-side"><span style="color:var(--accent);font-weight:700;font-size:12px">${t('inWork')}</span><button class="mini-cancel" onclick="cancelOrder(${o.id})">${t('cancelBtn')}</button></div>`;
+    return `<div class="cart-row" style="${o.status==='cancelled'?'opacity:.55;':''}"><div class="pic">🧾</div>
+      <div style="flex:1;min-width:0"><div class="n">${modeLabel} · ${o.items} ${pl(o.items,t('dishForms'))}</div>
+      <div class="p">${money(o.total)} · ${payName(payInfo)}</div></div>${side}</div>`;
+  }).join('');
+}
+function cancelOrder(id){
+  const o = myOrders.find(x=>x.id===id); if(!o || o.status==='cancelled') return;
+  o.status='cancelled'; saveState(); renderMyOrders(); toast(t('orderCancelled'));
+}
+
+/* ===================== RENDER ALL ===================== */
+function renderAll(){
+  applyStatic(); renderCats(); renderMenu(); renderHomePop(); updateCTA();
+  if(document.getElementById('s-cart').classList.contains('active')) renderCart();
+  if(document.getElementById('s-booking').classList.contains('active')) renderBooking();
+}
+loadState();       // restore cart, language, favorites, mode, payment
+renderBooking();   // build booking screen once
+setLang(lang);     // sync language toggles + render everything
+</script>
+<style>
+  html,body{padding:0!important;background:var(--bg)!important}
+  .phone{width:100%!important;max-width:100%!important;height:100vh!important;height:100dvh!important;max-height:none!important;border-radius:0!important;box-shadow:none!important}
+  .notch,.statusbar{display:none!important}
+</style>
+<script>
+(function(){
+  var tg = window.Telegram && window.Telegram.WebApp;
+  if(!tg) return;
+  try{ tg.ready(); tg.expand(); }catch(e){}
+  try{ tg.setHeaderColor("#100e0c"); tg.setBackgroundColor("#100e0c"); }catch(e){}
+  try{ if(tg.disableVerticalSwipes) tg.disableVerticalSwipes(); }catch(e){}
+})();
+</script>
+</body>
+</html>
