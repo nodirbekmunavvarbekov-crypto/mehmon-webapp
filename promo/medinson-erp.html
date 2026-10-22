@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<title>Medinson ERP — промо-ролик</title>
+<style>
+  @font-face{font-family:"IBM Plex Sans";font-weight:400;src:url(fonts/IBMPlexSans-400.ttf)}
+  @font-face{font-family:"IBM Plex Sans";font-weight:500;src:url(fonts/IBMPlexSans-500.ttf)}
+  @font-face{font-family:"IBM Plex Sans";font-weight:600;src:url(fonts/IBMPlexSans-600.ttf)}
+  @font-face{font-family:"IBM Plex Sans";font-weight:700;src:url(fonts/IBMPlexSans-700.ttf)}
+  :root{
+    --blue:#1F76FB;      /* Medinson brand blue */
+    --navy:#072267;      /* Medinson dark blue */
+    --sky:#D7E7FF;
+    --ink:#0f1a33;
+    --muted:#6b7590;
+    --line:#e4e9f3;
+    --soft:#f2f6fd;
+    --green:#067A52;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:720px;height:1280px;overflow:hidden;background:#fff}
+  body{font-family:"IBM Plex Sans",-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--navy);position:relative;-webkit-font-smoothing:antialiased}
+  #stage{position:absolute;inset:0;overflow:hidden;background:radial-gradient(120% 70% at 50% 110%,#eef4ff 0%,#ffffff 60%)}
+
+  .logo{position:absolute;left:46px;top:118px;height:36px}
+  .logo img{height:36px;display:block}
+
+  .steps{position:absolute;left:46px;top:186px;display:flex;gap:6px;opacity:0}
+  .steps i{display:block;width:52px;height:5px;border-radius:3px;background:var(--line)}
+  .steps i.on{background:var(--blue)}
+  .headline{position:absolute;left:46px;top:206px;width:640px;font-size:48px;line-height:1.14;font-weight:600;letter-spacing:-1px;color:var(--navy)}
+  .headline .w{display:inline-block;white-space:pre;will-change:transform,filter,opacity}
+  .headline .b{color:var(--blue)}
+  .pill{position:absolute;left:46px;top:352px;background:var(--blue);color:#fff;font-weight:600;font-size:19px;padding:12px 24px;border-radius:100px;box-shadow:0 10px 26px rgba(31,118,251,.32);opacity:0;white-space:nowrap}
+
+  .world{position:absolute;left:0;top:0;width:720px;height:1280px;perspective:1600px;perspective-origin:50% 55%}
+
+  /* ---- iPhone Pro Max mockup ---- */
+  .phone{position:absolute;left:195px;top:400px;width:330px;height:712px;transform-style:preserve-3d;will-change:transform}
+  .phone .frame{position:absolute;inset:0;border-radius:58px;background:linear-gradient(160deg,#a9abb1 0%,#7d8087 35%,#55585e 70%,#8d9096 100%);box-shadow:0 50px 90px rgba(7,34,103,.22),0 10px 24px rgba(7,34,103,.12)}
+  .phone .frame:after{content:"";position:absolute;inset:4px;border-radius:54px;background:#0b0c0f}
+  .phone .side{position:absolute;left:0;top:0;width:330px;height:712px;border-radius:58px;background:#3a3c42;transform:translateZ(-12px)}
+  .phone .btn-l1,.phone .btn-l2,.phone .btn-l3,.phone .btn-r{position:absolute;background:linear-gradient(90deg,#9a9da3,#6e7177);border-radius:2px;transform:translateZ(0)}
+  .phone .btn-l1{left:-3px;top:118px;width:3px;height:30px}
+  .phone .btn-l2{left:-3px;top:170px;width:3px;height:56px}
+  .phone .btn-l3{left:-3px;top:240px;width:3px;height:56px}
+  .phone .btn-r{right:-3px;top:200px;width:3px;height:84px}
+  .phone .screen{position:absolute;left:14px;top:14px;right:14px;bottom:14px;border-radius:44px;background:#fff;overflow:hidden;transform:translateZ(1px)}
+  .phone .island{position:absolute;left:50%;top:12px;width:98px;height:30px;margin-left:-49px;border-radius:16px;background:#000;transform:translateZ(2px);z-index:6}
+  .phone .home{position:absolute;left:50%;bottom:10px;width:120px;height:5px;margin-left:-60px;border-radius:3px;background:#111;transform:translateZ(2px);z-index:6;opacity:.85}
+  .status{position:absolute;left:0;right:0;top:0;height:52px;display:flex;align-items:center;justify-content:space-between;padding:12px 28px 0;font-size:14px;font-weight:600;color:#000;z-index:5}
+  .status .ic{display:flex;gap:5px;align-items:center}
+  .status .bars{display:flex;gap:2px;align-items:flex-end}
+  .status .bars i{display:block;width:3px;background:#000;border-radius:1px}
+  .status .bat{width:24px;height:12px;border:1.5px solid #000;border-radius:4px;position:relative;opacity:.9}
+  .status .bat:after{content:"";position:absolute;left:2px;top:2px;right:2px;bottom:2px;background:#000;border-radius:1.5px}
+  .shots{position:absolute;left:0;right:0;top:52px;bottom:0;background:#fafbfa}
+  .shots img{position:absolute;left:0;top:0;width:302px;height:auto;display:block;opacity:0}
+  .shots .fade{position:absolute;left:0;right:0;top:560px;height:60px;background:linear-gradient(rgba(250,251,250,0),#fafbfa 70%);z-index:3}
+  .press{position:absolute;border-radius:50%;border:3px solid var(--blue);opacity:0;pointer-events:none;z-index:4}
+
+  /* ---- floating cards ---- */
+  .fcard{position:absolute;left:0;top:0;transform-style:preserve-3d;will-change:transform;opacity:0}
+  .note{width:270px;background:#fff;border-radius:18px;padding:12px 14px;box-shadow:0 24px 50px rgba(7,34,103,.16),0 2px 6px rgba(7,34,103,.06);display:flex;gap:11px;align-items:center}
+  .note .i{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex:0 0 40px}
+  .note .t{font-size:13px;font-weight:600;line-height:1.2;color:var(--ink)}
+  .note .s{font-size:11px;color:var(--muted);margin-top:3px}
+  .note .ok{margin-left:auto;background:var(--blue);color:#fff;font-size:11px;font-weight:600;padding:6px 10px;border-radius:100px;white-space:nowrap}
+  .doc{width:214px;background:#fff;border-radius:14px;padding:14px;box-shadow:0 30px 60px rgba(7,34,103,.2);border:1px solid var(--line)}
+  .doc .h{font-size:10.5px;font-weight:700;letter-spacing:.6px;color:var(--blue)}
+  .doc .t{font-size:13px;font-weight:600;margin-top:4px;color:var(--ink)}
+  .doc .ln{height:6px;border-radius:3px;background:var(--soft);margin-top:8px}
+  .doc .ln.s{width:60%}
+  .doc .tot{display:flex;justify-content:space-between;margin-top:12px;font-size:12px;font-weight:600;border-top:1px solid var(--line);padding-top:8px;color:var(--ink)}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="logo"><img src="shots/logo_h.png" alt="medinson"></div>
+  <div class="steps" id="steps"><i></i><i></i><i></i></div>
+  <div class="headline" id="headline"></div>
+  <div class="pill" id="pill"></div>
+
+  <div class="world">
+
+    <!-- back phone (scene 7) -->
+    <div class="phone" id="phone2" style="opacity:0">
+      <div class="side"></div><div class="frame"></div>
+      <div class="btn-l1"></div><div class="btn-l2"></div><div class="btn-l3"></div><div class="btn-r"></div>
+      <div class="screen">
+        <div class="status"><span>9:41</span><div class="ic"><div class="bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></div><div class="bat"></div></div></div>
+        <div class="shots"><img src="shots/s3.jpg" style="opacity:1"><div class="fade"></div></div>
+      </div>
+      <div class="island"></div><div class="home"></div>
+    </div>
+
+    <!-- main phone -->
+    <div class="phone" id="phone">
+      <div class="side"></div><div class="frame"></div>
+      <div class="btn-l1"></div><div class="btn-l2"></div><div class="btn-l3"></div><div class="btn-r"></div>
+      <div class="screen">
+        <div class="status"><span>9:41</span><div class="ic"><div class="bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></div><div class="bat"></div></div></div>
+        <div class="shots" id="shots">
+          <img id="sh21" src="shots/s21.jpg">
+          <img id="sh18" src="shots/s18.jpg">
+          <img id="sh19" src="shots/s19.jpg">
+          <img id="sh4"  src="shots/s4.jpg">
+          <img id="sh13" src="shots/s13.jpg">
+          <img id="sh10" src="shots/s10.jpg">
+          <img id="sh9"  src="shots/s9.jpg">
+          <img id="sh5"  src="shots/s5.jpg">
+          <img id="sh7"  src="shots/s7.jpg">
+          <img id="sh16" src="shots/s16.jpg">
+          <img id="sh11" src="shots/s11.jpg">
+          <div class="fade"></div>
+          <div class="press" id="press"></div>
+        </div>
+      </div>
+      <div class="island"></div><div class="home"></div>
+
+    <div class="fcard" id="fc1"><div class="note"><div class="i" style="background:#e8fbee">💰</div><div><div class="t">Daromad (bu yil)</div><div class="s">31.7 mlrd so'm · 4722 ta buyurtma</div></div></div></div>
+    <div class="fcard" id="fc2"><div class="note"><div class="i" style="background:var(--sky)">🛏</div><div><div class="t">Yangi bron · Lyuks xona</div><div class="s">7 kun · 20-oktabr</div></div></div></div>
+    <div class="fcard" id="fc3"><div class="note"><div class="i" style="background:#fff4e5">📈</div><div><div class="t">Koyka bandligi</div><div class="s">55% · Avgust (peak)</div></div><div class="ok">Hisobot</div></div></div>
+    <div class="fcard" id="fdoc"><div class="doc"><div class="h">HISOBOT · 2026</div><div class="t">Koyka bandligi va daromad</div><div class="ln"></div><div class="ln s"></div><div class="ln"></div><div class="ln s"></div><div class="tot"><span>Jami bronlar</span><span>2670</span></div></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const easeOut=x=>1-Math.pow(1-x,3);
+const easeInOut=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const easeBack=x=>{const c=1.70158,c3=c+1;return 1+c3*Math.pow(x-1,3)+c*Math.pow(x-1,2);};
+const lerp=(a,b,p)=>a+(b-a)*p;
+function kf(t,pts,ease=easeInOut){
+  if(t<=pts[0][0])return pts[0][1];
+  for(let i=1;i<pts.length;i++){if(t<=pts[i][0]){const [t0,v0]=pts[i-1],[t1,v1]=pts[i];return lerp(v0,v1,ease(clamp((t-t0)/(t1-t0))));}}
+  return pts[pts.length-1][1];
+}
+
+// scenes: start, end, headline lines (*word* = blue), shots [[id, startOffset], ...], step, pill
+const SCENES=[
+  {s:0,   e:7,    lines:['Klinikangiz endi','*telefoningizda*'], shots:[['sh21',0]]},
+  {s:7,   e:9.5,  lines:['Bu *qanday* ishlaydi?'], shots:[['sh18',0]]},
+  {s:9.5, e:12,   lines:['*Bronlarni* boshqaring'], shots:[['sh19',0]], step:1},
+  {s:12,  e:14.5, lines:['*Moliyani* nazorat qiling'], shots:[['sh4',0],['sh13',1.3]], step:2},
+  {s:14.5,e:17,   lines:['Xodimlar va *omborni*','kuzating'], shots:[['sh10',0],['sh9',1.3]], step:3},
+  {s:17,  e:23,   lines:['Barcha ma’lumotlar —','bitta *statistikada*'], shots:[['sh5',0],['sh7',2.8]]},
+  {s:23,  e:28.5, lines:['Koyka bandligi —','*real* *vaqtda*'], shots:[['sh16',0]]},
+  {s:28.5,e:35.5, lines:['Klinikani raqamli','*boshqarmoqchimisiz?*'], shots:[['sh11',0]], pill:'Medinson menejeri bilan bog’laning'},
+];
+function sceneAt(t){return SCENES.find(s=>t>=s.s&&t<s.e)||SCENES[SCENES.length-1];}
+
+const headline=document.getElementById('headline');
+let builtFor=null;
+function buildHeadline(sc){
+  headline.innerHTML='';
+  sc.lines.forEach((ln,li)=>{
+    ln.split(' ').forEach((w,wi,arr)=>{
+      const span=document.createElement('span');span.className='w';
+      let txt=w; if(w.startsWith('*')){span.classList.add('b');txt=w.replace(/\*/g,'');}
+      span.textContent=txt+(wi<arr.length-1?' ':''); headline.appendChild(span);
+    });
+    if(li<sc.lines.length-1)headline.appendChild(document.createElement('br'));
+  });
+  builtFor=sc;
+}
+function animHeadline(sc,t){
+  if(builtFor!==sc)buildHeadline(sc);
+  const words=headline.querySelectorAll('.w'); const lt=t-sc.s, out=sc.e-t;
+  words.forEach((w,i)=>{
+    const d=i*0.07; const p=easeOut(clamp((lt-d)/0.45)); const q=1-easeInOut(clamp((0.3-out)/0.3));
+    w.style.opacity=(p*q).toFixed(3); w.style.transform=`translateY(${(1-p)*14}px)`; w.style.filter=`blur(${(1-p)*8}px)`;
+  });
+}
+const steps=document.getElementById('steps'), pill=document.getElementById('pill');
+const phone=document.getElementById('phone'), phone2=document.getElementById('phone2');
+const shotEls=[...document.querySelectorAll('#shots img')];
+function showShots(sc,lt,fade){
+  const op={};
+  sc.shots.forEach(([id,off],i)=>{
+    const next=sc.shots[i+1]; let o=easeInOut(clamp((lt-off)/0.35));
+    if(next){o*=1-easeInOut(clamp((lt-next[1])/0.35));}
+    op[id]=o;
+  });
+  shotEls.forEach(el=>{el.style.opacity=(op[el.id]||0)*fade;});
+}
+function setCard(id,{x=0,y=0,z=0,rx=0,ry=0,rz=0,s=1,o=1}){
+  const el=document.getElementById(id); el.style.opacity=o;
+  el.style.transform=`translate3d(${x}px,${y}px,${z}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg) scale(${s})`;
+}
+function setPhone(el,{x=0,y=0,z=0,rx=0,ry=0,rz=0,s=1,o=1}){
+  el.style.opacity=o; el.style.transform=`translate3d(${x}px,${y}px,${z}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg) scale(${s})`;
+}
+function hideCards(){['fc1','fc2','fc3','fdoc'].forEach(id=>document.getElementById(id).style.opacity=0);}
+
+window.seek=function(t){
+  const sc=sceneAt(t), lt=t-sc.s, out=sc.e-t, idx=SCENES.indexOf(sc);
+  animHeadline(sc,t);
+  if(sc.step){steps.style.opacity=easeOut(clamp(lt/0.4));[...steps.children].forEach((i,k)=>i.classList.toggle('on',k<sc.step));}else steps.style.opacity=0;
+  if(sc.pill){pill.textContent=sc.pill;const p=easeBack(clamp((lt-0.9)/0.6));pill.style.opacity=clamp((lt-0.9)/0.3);pill.style.transform=`translateY(${(1-p)*18}px) scale(${0.9+0.1*p})`;}else pill.style.opacity=0;
+  hideCards();
+  // screenshot fades in slightly after a scene starts (the headline leads), stays till the end
+  const fade=idx===0?1:easeOut(clamp(lt/0.3));
+  showShots(sc,lt,fade);
+  phone2.style.opacity=0;
+  const pr=document.getElementById('press'); pr.style.opacity=0;
+  const endGate=out<0.4?out/0.4:1;
+
+  switch(idx){
+    case 0:{ // hero
+      const rise=easeOut(clamp(lt/1.1));
+      setPhone(phone,{y:(1-rise)*260+kf(t,[[1,0],[7,-10]]),ry:kf(t,[[0,-18],[3,-6],[6.5,-14]]),rx:kf(t,[[0,6],[3.5,3],[7,5]]),rz:kf(t,[[0,-6],[3,-2],[7,-5]]),s:0.92+0.08*rise});
+      const p1=easeBack(clamp((lt-1.6)/0.7)), p2=easeBack(clamp((lt-2.4)/0.7)), p3=easeBack(clamp((lt-3.2)/0.7));
+      setCard('fc1',{x:lerp(520,356,p1),y:lerp(420,470,p1)+Math.sin(t*1.3)*5,z:120,ry:-16,rz:-4,o:clamp((lt-1.6)/0.3)*endGate});
+      setCard('fc2',{x:lerp(-240,36,p2),y:lerp(760,700,p2)+Math.sin(t*1.1+1)*5,z:140,ry:14,rz:3,o:clamp((lt-2.4)/0.3)*endGate});
+      setCard('fc3',{x:lerp(560,376,p3),y:lerp(940,900,p3)+Math.sin(t*1.5+2)*5,z:160,ry:-18,rz:-3,o:clamp((lt-3.2)/0.3)*endGate});
+      break;}
+    case 1: setPhone(phone,{y:-10,ry:kf(t,[[7,-14],[9.5,8]]),rx:4,rz:-2}); break;
+    case 2: setPhone(phone,{y:-10,ry:kf(t,[[9.5,8],[12,0]]),rx:3,rz:kf(t,[[9.5,-2],[12,0]])}); break;
+    case 3: setPhone(phone,{y:-10,ry:kf(t,[[12,0],[14.5,-8]]),rx:3,rz:kf(t,[[12,0],[14.5,-2]])}); break;
+    case 4:{
+      setPhone(phone,{y:-10,ry:kf(t,[[14.5,-8],[17,-4]]),rx:3,rz:-1});
+      // tap ripple on the screen when the second screenshot appears
+      const rp=clamp((lt-1.25)/0.6); pr.style.left='150px';pr.style.top='300px';pr.style.width='90px';pr.style.height='90px';
+      pr.style.opacity=(1-rp)*(lt>1.2?1:0); pr.style.transform=`translate(-50%,-50%) scale(${0.4+1.2*rp})`;
+      break;}
+    case 5:{
+      setPhone(phone,{y:-10,x:kf(t,[[17,0],[19,-40],[23,0]]),ry:kf(t,[[17,-4],[19,26],[21.5,10],[23,2]]),rx:kf(t,[[17,3],[19,8],[23,4]]),rz:kf(t,[[17,-1],[19,-6],[23,0]])});
+      const dp=easeBack(clamp((lt-0.6)/0.9));
+      setCard('fdoc',{x:lerp(300,466,dp),y:lerp(640,500,dp)+Math.sin(t*1.2)*6,z:lerp(0,200,dp),ry:-22,rz:6,rx:4,s:lerp(0.6,1,dp),o:clamp((lt-0.6)/0.3)*endGate});
+      const p3=easeBack(clamp((lt-3.4)/0.7));
+      setCard('fc3',{x:lerp(-260,30,p3),y:980+Math.sin(t*1.3)*5,z:150,ry:14,rz:3,o:clamp((lt-3.4)/0.3)*endGate});
+      break;}
+    case 6:{
+      const mv=easeInOut(clamp(lt/1.0));
+      setPhone(phone,{x:lerp(0,120,mv),y:lerp(-10,40,mv),ry:kf(t,[[23,2],[24,-14],[28.5,-10]]),rx:4,rz:-3,s:lerp(1,0.9,mv)});
+      const lp=easeBack(clamp((lt-0.5)/0.9));
+      setPhone(phone2,{x:lerp(-520,-165,lp),y:-20+Math.sin(t*0.9)*4,z:-90,ry:18,rx:4,rz:-2,s:0.8,o:clamp((lt-0.5)/0.3)*endGate});
+      break;}
+    case 7:{
+      const rise=easeOut(clamp(lt/0.9));
+      setPhone(phone,{x:lerp(120,0,rise),y:lerp(40,-10,rise)+kf(t,[[29.5,0],[35.5,-6]]),ry:kf(t,[[28.5,-10],[31,6],[35.5,-4]]),rx:kf(t,[[28.5,4],[35.5,2]]),rz:kf(t,[[28.5,-3],[31,0],[35.5,-2]]),s:lerp(0.9,1,rise)});
+      break;}
+  }
+  document.getElementById('stage').style.opacity=1-clamp((t-34.9)/0.6);
+};
+window.seek(0);
+if(location.search.includes('play')){const t0=performance.now();(function loop(){window.seek(((performance.now()-t0)/1000)%35.5);requestAnimationFrame(loop);})();}
+</script>
+</body>
+</html>
