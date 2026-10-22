@@ -8,48 +8,42 @@
   @font-face{font-family:"IBM Plex Sans";font-weight:500;src:url(fonts/IBMPlexSans-500.ttf)}
   @font-face{font-family:"IBM Plex Sans";font-weight:600;src:url(fonts/IBMPlexSans-600.ttf)}
   @font-face{font-family:"IBM Plex Sans";font-weight:700;src:url(fonts/IBMPlexSans-700.ttf)}
-  :root{
-    --blue:#1F76FB; --navy:#072267; --sky:#D7E7FF; --mint:#95EACE; --mint2:#BFF5E3;
-  }
+  :root{ --blue:#1F76FB; --navy:#072267; --sky:#D7E7FF; --mint:#95EACE; }
   *{box-sizing:border-box;margin:0;padding:0}
-  html,body{width:720px;height:1280px;overflow:hidden;background:#072267}
-  body{font-family:"IBM Plex Sans",-apple-system,"Segoe UI",Roboto,sans-serif;color:#fff;position:relative;-webkit-font-smoothing:antialiased}
-  #stage{position:absolute;inset:0;overflow:hidden;
-    background:linear-gradient(180deg,#072267 0%,#0d3f9f 26%,#1F76FB 54%,#6aa6ff 80%,#D7E7FF 100%)}
-  .blob{position:absolute;border-radius:50%;filter:blur(70px);will-change:transform;pointer-events:none}
-  #b1{left:-200px;top:380px;width:620px;height:620px;background:radial-gradient(circle,rgba(149,234,206,.55),rgba(149,234,206,0) 65%)}
-  #b2{left:300px;top:780px;width:700px;height:700px;background:radial-gradient(circle,rgba(215,231,255,.75),rgba(215,231,255,0) 65%)}
-  #b3{left:260px;top:-120px;width:520px;height:520px;background:radial-gradient(circle,rgba(76,40,220,.45),rgba(76,40,220,0) 65%)}
-  .grain{position:absolute;inset:0;background:radial-gradient(140% 90% at 50% 120%,rgba(255,255,255,.14),rgba(255,255,255,0) 60%);pointer-events:none}
+  html,body{width:720px;height:1280px;overflow:hidden;background:#fff}
+  body{font-family:"IBM Plex Sans",-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--navy);position:relative;-webkit-font-smoothing:antialiased}
+  #stage{position:absolute;inset:0;overflow:hidden;background:#fff}
+  .blob{position:absolute;border-radius:50%;filter:blur(80px);will-change:transform;pointer-events:none}
+  #b1{left:-220px;top:700px;width:640px;height:640px;background:radial-gradient(circle,rgba(215,231,255,.9),rgba(215,231,255,0) 65%)}
+  #b2{left:330px;top:820px;width:640px;height:640px;background:radial-gradient(circle,rgba(149,234,206,.45),rgba(149,234,206,0) 65%)}
 
   .logo{position:absolute;left:46px;top:116px;height:38px}
-  .logo img{height:38px;display:block;filter:drop-shadow(0 4px 12px rgba(7,34,103,.25))}
+  .logo img{height:38px;display:block}
 
   .steps{position:absolute;left:46px;top:186px;display:flex;gap:6px;opacity:0}
-  .steps i{display:block;width:52px;height:5px;border-radius:3px;background:rgba(255,255,255,.3)}
-  .steps i.on{background:var(--mint)}
-  .headline{position:absolute;left:46px;top:206px;width:640px;font-size:50px;line-height:1.12;font-weight:600;letter-spacing:-1px;color:#fff;text-shadow:0 6px 30px rgba(7,34,103,.25)}
+  .steps i{display:block;width:52px;height:5px;border-radius:3px;background:#e4ebf7}
+  .steps i.on{background:var(--blue)}
+  .headline{position:absolute;left:46px;top:206px;width:640px;font-size:50px;line-height:1.12;font-weight:600;letter-spacing:-1px;color:var(--navy)}
   .headline .w{display:inline-block;white-space:pre;will-change:transform,filter,opacity}
-  .headline .b{color:var(--mint2)}
-  .pill{position:absolute;left:46px;top:352px;background:#fff;color:var(--navy);font-weight:600;font-size:19px;padding:13px 24px;border-radius:100px;box-shadow:0 14px 34px rgba(7,34,103,.35);opacity:0;white-space:nowrap}
+  .headline .b{color:var(--blue)}
+  .pill{position:absolute;left:46px;top:352px;background:var(--blue);color:#fff;font-weight:600;font-size:19px;padding:13px 24px;border-radius:100px;box-shadow:0 12px 30px rgba(31,118,251,.32);opacity:0;white-space:nowrap}
 
   .world{position:absolute;left:0;top:0;width:720px;height:1280px;perspective:1500px;perspective-origin:50% 56%}
-  .glow{position:absolute;left:120px;top:520px;width:480px;height:620px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(255,255,255,.35),rgba(149,234,206,.18) 45%,rgba(31,118,251,0) 70%);filter:blur(30px);pointer-events:none}
 
   /* ---- iPhone Pro Max ---- */
   .phone{position:absolute;left:190px;top:398px;width:340px;height:715px;transform-style:preserve-3d;will-change:transform}
   .phone .frame{position:absolute;inset:0;border-radius:50px;
-    background:linear-gradient(150deg,#e6e8ee 0%,#9a9ea8 18%,#5c6069 45%,#3b3e45 70%,#8d9199 100%);
-    box-shadow:0 70px 120px rgba(7,34,103,.5),0 24px 48px rgba(7,34,103,.3),inset 0 0 0 1px rgba(255,255,255,.35)}
+    background:linear-gradient(150deg,#f2f3f6 0%,#b4b7bf 18%,#6f737b 45%,#4a4d54 70%,#a3a6ad 100%);
+    box-shadow:0 60px 110px rgba(7,34,103,.28),0 20px 40px rgba(7,34,103,.14),inset 0 0 0 1px rgba(255,255,255,.5)}
   .phone .frame:after{content:"";position:absolute;inset:3px;border-radius:47px;background:#0a0b0e;box-shadow:inset 0 0 0 1px #2a2c31}
-  .phone .side{position:absolute;left:0;top:0;width:340px;height:715px;border-radius:50px;background:#45484f;transform:translateZ(-14px)}
-  .phone .btn{position:absolute;background:linear-gradient(90deg,#b9bcc4,#6f737b);border-radius:2px}
+  .phone .side{position:absolute;left:0;top:0;width:340px;height:715px;border-radius:50px;background:#54575e;transform:translateZ(-14px)}
+  .phone .btn{position:absolute;background:linear-gradient(90deg,#c3c6cd,#7a7e86);border-radius:2px}
   .phone .b1{left:-3px;top:120px;width:3px;height:30px}
   .phone .b2{left:-3px;top:172px;width:3px;height:58px}
   .phone .b3{left:-3px;top:244px;width:3px;height:58px}
   .phone .b4{right:-3px;top:206px;width:3px;height:90px}
   .phone .screen{position:absolute;left:9px;top:9px;right:9px;bottom:9px;border-radius:41px;background:#fafbfa;overflow:hidden;transform:translateZ(1px)}
-  .phone .glare{position:absolute;inset:0;border-radius:41px;background:linear-gradient(118deg,rgba(255,255,255,.22) 0%,rgba(255,255,255,.06) 28%,rgba(255,255,255,0) 42%);pointer-events:none;z-index:9}
+  .phone .glare{position:absolute;inset:0;border-radius:41px;background:linear-gradient(118deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,.04) 28%,rgba(255,255,255,0) 42%);pointer-events:none;z-index:9}
   .phone .island{position:absolute;left:50%;top:19px;width:94px;height:27px;margin-left:-47px;border-radius:14px;background:#000;transform:translateZ(2px);z-index:10}
   .phone .island:after{content:"";position:absolute;right:7px;top:7px;width:13px;height:13px;border-radius:50%;background:radial-gradient(circle at 45% 45%,#15171c,#000 70%)}
   .status{position:absolute;left:0;right:0;top:0;height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 34px 0 38px;font-size:15px;font-weight:600;color:#000;z-index:5;letter-spacing:-.2px}
@@ -61,12 +55,12 @@
   .shots{position:absolute;left:0;right:0;top:44px;height:574px;overflow:hidden}
   .shots img{position:absolute;left:0;top:0;width:322px;height:auto;display:block;opacity:0}
   .safari{position:absolute;left:0;right:0;bottom:0;height:79px;background:#fff;z-index:4}
-  .safari .url{position:absolute;left:50%;top:13px;width:240px;height:40px;margin-left:-120px;border-radius:20px;background:#3c3c3f;color:#fff;font-size:12.5px;font-weight:600;display:flex;align-items:center;justify-content:center;letter-spacing:.1px}
+  .safari .url{position:absolute;left:50%;top:13px;width:240px;height:40px;margin-left:-120px;border-radius:20px;background:#3c3c3f;color:#fff;font-size:12.5px;font-weight:600;display:flex;align-items:center;justify-content:center}
   .safari .home{position:absolute;left:50%;bottom:7px;width:124px;height:5px;margin-left:-62px;border-radius:3px;background:#111}
 
   /* ---- brand floating assets ---- */
   .fa{position:absolute;left:0;top:0;will-change:transform;opacity:0;transform-origin:center}
-  .fa img{display:block;filter:drop-shadow(0 30px 40px rgba(7,34,103,.35))}
+  .fa img{display:block;filter:drop-shadow(0 26px 36px rgba(7,34,103,.22))}
   .fa.kpi img{width:250px}
   .fa.icon img{width:170px}
   .fa.gear img{width:150px}
@@ -74,21 +68,17 @@
 </head>
 <body>
 <div id="stage">
-  <div class="blob" id="b3"></div><div class="blob" id="b1"></div><div class="blob" id="b2"></div><div class="grain"></div>
-  <div class="logo"><img src="brand/logo_white.png" alt="medinson"></div>
+  <div class="blob" id="b1"></div><div class="blob" id="b2"></div>
+  <div class="logo"><img src="brand/logo_blue.png" alt="medinson"></div>
   <div class="steps" id="steps"><i></i><i></i><i></i></div>
   <div class="headline" id="headline"></div>
   <div class="pill" id="pill"></div>
 
   <div class="world">
-    <div class="glow" id="glow"></div>
-
-    <!-- behind-phone assets -->
     <div class="fa gear" id="g1"><img src="brand/gear_blue.png"></div>
     <div class="fa gear" id="g2"><img src="brand/gear_violet.png"></div>
     <div class="fa gear" id="g3"><img src="brand/gear_teal.png"></div>
 
-    <!-- back phone -->
     <div class="phone" id="phone2" style="opacity:0">
       <div class="side"></div><div class="frame"></div>
       <div class="btn b1"></div><div class="btn b2"></div><div class="btn b3"></div><div class="btn b4"></div>
@@ -101,7 +91,6 @@
       <div class="island"></div>
     </div>
 
-    <!-- main phone -->
     <div class="phone" id="phone">
       <div class="side"></div><div class="frame"></div>
       <div class="btn b1"></div><div class="btn b2"></div><div class="btn b3"></div><div class="btn b4"></div>
@@ -119,7 +108,6 @@
       <div class="island"></div>
     </div>
 
-    <!-- in-front assets -->
     <div class="fa kpi" id="k1"><img src="brand/kpi_income.png"></div>
     <div class="fa kpi" id="k2"><img src="brand/kpi_patients.png"></div>
     <div class="fa kpi" id="k3"><img src="brand/kpi_new.png"></div>
@@ -134,7 +122,7 @@
 const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
 const easeOut=x=>1-Math.pow(1-x,3);
 const easeInOut=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
-const easeBack=x=>{const c=1.70158,c3=c+1;return 1+c3*Math.pow(x-1,3)+c*Math.pow(x-1,2);};
+const smooth=x=>x*x*(3-2*x);
 const lerp=(a,b,p)=>a+(b-a)*p;
 function kf(t,pts,ease=easeInOut){
   if(t<=pts[0][0])return pts[0][1];
@@ -149,15 +137,26 @@ const TXT={
 const PILL={ru:'Свяжитесь с менеджером Medinson',uz:'Medinson menejeri bilan bog‘laning'};
 const T=TXT[LANG]||TXT.ru;
 const SCENES=[
-  {s:0,   e:7,    lines:T[0], shots:[['sh21',0]]},
-  {s:7,   e:9.5,  lines:T[1], shots:[['sh18',0]]},
-  {s:9.5, e:12,   lines:T[2], shots:[['sh19',0]], step:1},
-  {s:12,  e:14.5, lines:T[3], shots:[['sh4',0],['sh13',1.3]], step:2},
-  {s:14.5,e:17,   lines:T[4], shots:[['sh10',0],['sh9',1.3]], step:3},
-  {s:17,  e:23,   lines:T[5], shots:[['sh5',0],['sh7',2.8]]},
-  {s:23,  e:28.5, lines:T[6], shots:[['sh16',0]]},
-  {s:28.5,e:35.5, lines:T[7], shots:[['sh11',0]], pill:PILL[LANG]||PILL.ru},
+  {s:0,   e:7,   lines:T[0]},
+  {s:7,   e:9.5, lines:T[1]},
+  {s:9.5, e:12,  lines:T[2], step:1},
+  {s:12,  e:14.5,lines:T[3], step:2},
+  {s:14.5,e:17,  lines:T[4], step:3},
+  {s:17,  e:23,  lines:T[5]},
+  {s:23,  e:28.5,lines:T[6]},
+  {s:28.5,e:35.5,lines:T[7], pill:PILL[LANG]||PILL.ru},
 ];
+// one continuous timeline of screenshots: [time, id]; each new one cross-fades over 0.45s
+const SHOTS=[[0,'sh21'],[7,'sh18'],[9.5,'sh19'],[12,'sh4'],[13.3,'sh13'],[14.5,'sh10'],[15.8,'sh9'],[17,'sh5'],[19.8,'sh7'],[23,'sh16'],[28.5,'sh11']];
+// continuous phone motion (no jumps at scene boundaries)
+const PH={
+  x:[[0,0],[17,0],[19,-40],[23,0],[24,120],[28.5,120],[29.4,0]],
+  y:[[0,250],[1.1,-10],[23,-10],[24,40],[28.5,40],[29.4,22],[35.5,16]],
+  ry:[[0,-18],[3,-6],[6.5,-14],[7.5,-14],[9.5,8],[12,0],[14.5,-8],[17,-4],[19,26],[21.5,10],[23,2],[24,-14],[28.5,-10],[31,6],[35.5,-4]],
+  rx:[[0,6],[3.5,3],[7,5],[9,4],[12,3],[17,3],[19,8],[23,4],[28.5,4],[35.5,2]],
+  rz:[[0,-6],[3,-2],[7,-5],[9,-2],[12,0],[14.5,-2],[17,-1],[19,-6],[23,0],[24,-3],[28.5,-3],[31,0],[35.5,-2]],
+  s:[[0,0.92],[1.1,1],[23,1],[24,0.9],[28.5,0.9],[29.4,1]],
+};
 function sceneAt(t){return SCENES.find(s=>t>=s.s&&t<s.e)||SCENES[SCENES.length-1];}
 const headline=document.getElementById('headline'); let builtFor=null;
 function buildHeadline(sc){
@@ -173,86 +172,75 @@ function buildHeadline(sc){
 function animHeadline(sc,t){
   if(builtFor!==sc)buildHeadline(sc);
   const lt=t-sc.s,out=sc.e-t;
-  headline.querySelectorAll('.w').forEach((w,i)=>{const d=i*0.07,p=easeOut(clamp((lt-d)/0.45)),q=1-easeInOut(clamp((0.3-out)/0.3));
+  headline.querySelectorAll('.w').forEach((w,i)=>{const d=i*0.07,p=easeOut(clamp((lt-d)/0.45)),q=1-easeInOut(clamp((0.35-out)/0.35));
     w.style.opacity=(p*q).toFixed(3);w.style.transform=`translateY(${(1-p)*14}px)`;w.style.filter=`blur(${(1-p)*8}px)`;});
 }
 const steps=document.getElementById('steps'),pill=document.getElementById('pill');
 const phone=document.getElementById('phone'),phone2=document.getElementById('phone2');
 const shotEls=[...document.querySelectorAll('#shots img')];
-function showShots(sc,lt,fade){
-  const op={};
-  sc.shots.forEach(([id,off],i)=>{const next=sc.shots[i+1];let o=easeInOut(clamp((lt-off)/0.35));if(next)o*=1-easeInOut(clamp((lt-next[1])/0.35));op[id]=o;});
-  shotEls.forEach(el=>el.style.opacity=(op[el.id]||0)*fade);
+function showShots(t){
+  let cur=0; for(let i=0;i<SHOTS.length;i++) if(t>=SHOTS[i][0]) cur=i;
+  const p=cur===0?1:smooth(clamp((t-SHOTS[cur][0])/0.45));
+  const op={}; op[SHOTS[cur][1]]=p; if(cur>0) op[SHOTS[cur-1][1]]=1-p;
+  shotEls.forEach(el=>el.style.opacity=op[el.id]||0);
 }
 const FA=['g1','g2','g3','k1','k2','k3','k4','i1','i2','i3'];
 function fa(id,{x=0,y=0,z=0,rx=0,ry=0,rz=0,s=1,o=1}){const el=document.getElementById(id);el.style.opacity=o;
   el.style.transform=`translate3d(${x}px,${y}px,${z}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg) scale(${s})`;}
 function setPhone(el,{x=0,y=0,rx=0,ry=0,rz=0,s=1,o=1}){el.style.opacity=o;el.style.transform=`translate3d(${x}px,${y}px,0) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg) scale(${s})`;}
-function fly(id,lt,start,from,to,extra={},gate=1){
-  const p=easeBack(clamp((lt-start)/0.75)),o=clamp((lt-start)/0.3)*gate;
-  fa(id,Object.assign({x:lerp(from[0],to[0],p),y:lerp(from[1],to[1],p),o,s:lerp(0.7,1,p)},extra));
+// gentle card: eases in from a small offset over 0.6s, drifts out over 0.5s before `tOut`
+function card(id,lt,tIn,tOut,x,y,extra={}){
+  const p=easeOut(clamp((lt-tIn)/0.6)), q=1-easeInOut(clamp((lt-(tOut-0.5))/0.5));
+  const side=x<360?-1:1, bob=Math.sin(lt*1.1+x*0.01)*5;
+  fa(id,Object.assign({x:x+side*(1-p)*36,y:y+(1-p)*22-(1-q)*16+bob,o:p*q,s:0.94+0.06*p},extra));
 }
 
 window.seek=function(t){
-  const sc=sceneAt(t),lt=t-sc.s,out=sc.e-t,idx=SCENES.indexOf(sc);
+  const sc=sceneAt(t),lt=t-sc.s,dur=sc.e-sc.s,idx=SCENES.indexOf(sc);
   animHeadline(sc,t);
-  if(sc.step){steps.style.opacity=easeOut(clamp(lt/0.4));[...steps.children].forEach((i,k)=>i.classList.toggle('on',k<sc.step));}else steps.style.opacity=0;
-  if(sc.pill){pill.textContent=sc.pill;const p=easeBack(clamp((lt-0.9)/0.6));pill.style.opacity=clamp((lt-0.9)/0.3);pill.style.transform=`translateY(${(1-p)*18}px) scale(${0.9+0.1*p})`;}else pill.style.opacity=0;
+  if(sc.step){steps.style.opacity=easeOut(clamp(lt/0.4))*(1-easeInOut(clamp((lt-(dur-0.35))/0.35)));[...steps.children].forEach((i,k)=>i.classList.toggle('on',k<sc.step));}else steps.style.opacity=0;
+  if(sc.pill){pill.textContent=sc.pill;const p=easeOut(clamp((lt-0.9)/0.6));pill.style.opacity=p;pill.style.transform=`translateY(${(1-p)*16}px)`;}else pill.style.opacity=0;
   FA.forEach(id=>document.getElementById(id).style.opacity=0);
-  phone2.style.opacity=0;
-  showShots(sc,lt,idx===0?1:easeOut(clamp(lt/0.3)));
+  showShots(t);
+  setPhone(phone,{x:kf(t,PH.x),y:kf(t,PH.y,easeOut),rx:kf(t,PH.rx),ry:kf(t,PH.ry),rz:kf(t,PH.rz),s:kf(t,PH.s,easeOut)});
   document.getElementById('b1').style.transform=`translate(${Math.sin(t*0.25)*40}px,${Math.cos(t*0.2)*30}px)`;
   document.getElementById('b2').style.transform=`translate(${Math.cos(t*0.22)*50}px,${Math.sin(t*0.18)*30}px)`;
-  document.getElementById('b3').style.transform=`translate(${Math.sin(t*0.3+1)*40}px,${Math.cos(t*0.25)*20}px)`;
-  const gate=out<0.4?out/0.4:1, bob=k=>Math.sin(t*1.2+k)*6;
+  phone2.style.opacity=0;
 
   switch(idx){
-    case 0:{
-      const rise=easeOut(clamp(lt/1.1));
-      setPhone(phone,{y:(1-rise)*260+kf(t,[[1,0],[7,-10]]),ry:kf(t,[[0,-18],[3,-6],[6.5,-14]]),rx:kf(t,[[0,6],[3.5,3],[7,5]]),rz:kf(t,[[0,-6],[3,-2],[7,-5]]),s:0.92+0.08*rise});
-      fly('k1',lt,1.5,[-300,760],[-20,720+bob(0)],{z:140,ry:16,rz:-3},gate);
-      fly('k2',lt,2.2,[560,430],[470,470+bob(1)],{z:120,ry:-18,rz:3},gate);
-      fly('k3',lt,2.9,[560,960],[455,930+bob(2)],{z:160,ry:-16,rz:-2},gate);
-      fly('i2',lt,3.6,[-200,420],[30,420+bob(3)],{z:60,ry:14,rz:-6,s:0.85},gate);
-      break;}
+    case 0:
+      card('k1',lt,1.5,dur,-20,720,{z:140,ry:16,rz:-3});
+      card('k2',lt,2.2,dur,470,470,{z:120,ry:-18,rz:3});
+      card('k3',lt,2.9,dur,455,930,{z:160,ry:-16,rz:-2});
+      card('i2',lt,3.6,dur,30,420,{z:60,ry:14,rz:-6,s:0.85});
+      break;
     case 1:{
-      setPhone(phone,{y:-10,ry:kf(t,[[7,-14],[9.5,8]]),rx:4,rz:-2});
-      const g=(id,x,y,dir,ph,st)=>{const p=easeBack(clamp((lt-st)/0.7));fa(id,{x,y:y+bob(ph),z:-60,rz:dir*t*40,s:lerp(0.5,1,p),o:clamp((lt-st)/0.3)*gate});};
-      g('g1',40,450,1,0,0.2); g('g2',520,560,-1,1,0.35); g('g3',470,920,1,2,0.5);
+      const g=(id,x,y,dir,st)=>{const p=easeOut(clamp((lt-st)/0.6)),q=1-easeInOut(clamp((lt-(dur-0.5))/0.5));fa(id,{x,y:y+Math.sin(lt*1.1+x*0.01)*5,z:-60,rz:dir*t*40,s:0.85+0.15*p,o:p*q});};
+      g('g1',40,450,1,0.2); g('g2',520,560,-1,0.35); g('g3',470,920,1,0.5);
       break;}
-    case 2:{
-      setPhone(phone,{y:-10,ry:kf(t,[[9.5,8],[12,0]]),rx:3,rz:kf(t,[[9.5,-2],[12,0]])});
-      fly('k3',lt,0.5,[560,520],[452,540+bob(0)],{z:150,ry:-16,rz:3},gate);
-      break;}
-    case 3:{
-      setPhone(phone,{y:-10,ry:kf(t,[[12,0],[14.5,-8]]),rx:3,rz:kf(t,[[12,0],[14.5,-2]])});
-      fly('k1',lt,0.5,[-300,560],[-10,560+bob(0)],{z:150,ry:16,rz:-3},gate);
-      fly('k4',lt,1.4,[560,900],[455,900+bob(1)],{z:150,ry:-16,rz:2},gate);
-      break;}
-    case 4:{
-      setPhone(phone,{y:-10,ry:kf(t,[[14.5,-8],[17,-4]]),rx:3,rz:-1});
-      fly('k2',lt,0.5,[560,480],[458,500+bob(0)],{z:150,ry:-16,rz:3},gate);
-      fly('i1',lt,1.3,[-220,860],[20,860+bob(1)],{z:80,ry:12,rz:-5,s:0.8},gate);
-      break;}
-    case 5:{
-      setPhone(phone,{y:-10,x:kf(t,[[17,0],[19,-40],[23,0]]),ry:kf(t,[[17,-4],[19,26],[21.5,10],[23,2]]),rx:kf(t,[[17,3],[19,8],[23,4]]),rz:kf(t,[[17,-1],[19,-6],[23,0]])});
-      fly('k3',lt,0.6,[300,640],[456,470+bob(0)],{z:200,ry:-20,rz:5,rx:3},gate);
-      fly('k2',lt,2.4,[-300,880],[-15,880+bob(1)],{z:170,ry:16,rz:-3},gate);
-      fly('k1',lt,3.6,[560,960],[468,960+bob(2)],{z:150,ry:-14,rz:2},gate);
-      break;}
+    case 2: card('k3',lt,0.5,dur,452,540,{z:150,ry:-16,rz:3}); break;
+    case 3:
+      card('k1',lt,0.5,dur,-10,560,{z:150,ry:16,rz:-3});
+      card('k4',lt,1.4,dur,455,900,{z:150,ry:-16,rz:2});
+      break;
+    case 4:
+      card('k2',lt,0.5,dur,458,500,{z:150,ry:-16,rz:3});
+      card('i1',lt,1.3,dur,20,860,{z:80,ry:12,rz:-5,s:0.8});
+      break;
+    case 5:
+      card('k3',lt,0.6,dur,456,470,{z:200,ry:-20,rz:5,rx:3});
+      card('k2',lt,2.4,dur,-15,880,{z:170,ry:16,rz:-3});
+      card('k1',lt,3.6,dur,468,960,{z:150,ry:-14,rz:2});
+      break;
     case 6:{
-      const mv=easeInOut(clamp(lt/1.0));
-      setPhone(phone,{x:lerp(0,120,mv),y:lerp(-10,40,mv),ry:kf(t,[[23,2],[24,-14],[28.5,-10]]),rx:4,rz:-3,s:lerp(1,0.9,mv)});
-      const lp=easeBack(clamp((lt-0.5)/0.9));
-      setPhone(phone2,{x:lerp(-520,-165,lp),y:-20+Math.sin(t*0.9)*4,ry:18,rx:4,rz:-2,s:0.8,o:clamp((lt-0.5)/0.3)*gate});
-      fly('i1',lt,1.6,[560,980],[470,960+bob(0)],{z:120,ry:-14,rz:4,s:0.85},gate);
+      const lp=easeOut(clamp((lt-0.5)/0.9)),q=1-easeInOut(clamp((lt-(dur-0.5))/0.5));
+      setPhone(phone2,{x:lerp(-260,-165,lp),y:-20+Math.sin(t*0.9)*4,ry:18,rx:4,rz:-2,s:0.8,o:lp*q});
+      card('i1',lt,1.6,dur,470,960,{z:120,ry:-14,rz:4,s:0.85});
       break;}
-    case 7:{
-      const rise=easeOut(clamp(lt/0.9));
-      setPhone(phone,{x:lerp(120,0,rise),y:lerp(40,22,rise)+kf(t,[[29.5,0],[35.5,-6]]),ry:kf(t,[[28.5,-10],[31,6],[35.5,-4]]),rx:kf(t,[[28.5,4],[35.5,2]]),rz:kf(t,[[28.5,-3],[31,0],[35.5,-2]]),s:lerp(0.9,1,rise)});
-      fly('i3',lt,1.4,[560,540],[495,520+bob(0)],{z:140,ry:-16,rz:6,s:0.9},gate);
-      fly('k1',lt,2.2,[-300,900],[-15,900+bob(1)],{z:150,ry:16,rz:-3},gate);
-      break;}
+    case 7:
+      card('i3',lt,1.4,dur,495,520,{z:140,ry:-16,rz:6,s:0.9});
+      card('k1',lt,2.2,dur,-15,900,{z:150,ry:16,rz:-3});
+      break;
   }
   document.getElementById('stage').style.opacity=1-clamp((t-34.9)/0.6);
 };
