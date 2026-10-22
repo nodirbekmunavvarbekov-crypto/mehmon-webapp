@@ -8,7 +8,7 @@ const fs = require('fs'); const path = require('path');
   fs.mkdirSync(outdir, { recursive: true });
   const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--no-sandbox'] });
   const page = await browser.newPage({ viewport: { width: 720, height: 1280 }, deviceScaleFactor: 1 });
-  await page.goto('file://' + path.resolve(html));
+  const [hp, q] = html.split('?'); await page.goto('file://' + path.resolve(hp) + (q ? '?' + q : ''));
   await page.evaluate(() => document.fonts.ready);
   const times = sample ? sample.split(',').map(Number) : Array.from({ length: Math.round(dur * fps) }, (_, i) => i / fps);
   let i = 0;
