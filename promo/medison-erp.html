@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>MEDISON ERP — промо-ролик</title>
+<style>
+  :root{
+    --blue:#1f6ef7;
+    --blue2:#0f56d6;
+    --ink:#121418;
+    --muted:#7b8190;
+    --line:#e6e8ee;
+    --soft:#f3f5f9;
+    --green:#22c55e;
+    --red:#ef4444;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:720px;height:1280px;overflow:hidden;background:#fff}
+  body{font-family:"Inter Display","Inter",-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);position:relative;
+    -webkit-font-smoothing:antialiased}
+  #stage{position:absolute;inset:0;overflow:hidden;background:radial-gradient(120% 70% at 50% 110%,#f2f5fa 0%,#ffffff 60%)}
+
+  /* ---------- logo ---------- */
+  .logo{position:absolute;left:46px;top:126px;display:flex;align-items:center;gap:10px}
+  .logo .mark{width:34px;height:34px;border-radius:9px;background:var(--blue);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(31,110,247,.28)}
+  .logo .mark svg{width:20px;height:20px}
+  .logo .word{font-weight:600;font-size:21px;letter-spacing:5px;color:#2b2f38}
+
+  /* ---------- headline ---------- */
+  .steps{position:absolute;left:46px;top:186px;display:flex;gap:6px;opacity:0}
+  .steps i{display:block;width:52px;height:5px;border-radius:3px;background:var(--line)}
+  .steps i.on{background:var(--blue)}
+  .headline{position:absolute;left:46px;top:206px;width:640px;font-size:48px;line-height:1.14;font-weight:600;letter-spacing:-1px}
+  .headline .w{display:inline-block;white-space:pre;will-change:transform,filter,opacity}
+  .headline .b{color:var(--blue)}
+  .pill{position:absolute;left:46px;top:352px;background:var(--blue);color:#fff;font-weight:600;font-size:19px;padding:12px 24px;border-radius:100px;box-shadow:0 10px 26px rgba(31,110,247,.3);opacity:0;white-space:nowrap}
+
+  /* ---------- phone ---------- */
+  .world{position:absolute;left:0;top:0;width:720px;height:1280px;perspective:1600px;perspective-origin:50% 55%}
+  .phone{position:absolute;left:200px;top:410px;width:320px;height:680px;transform-style:preserve-3d;will-change:transform}
+  .phone .body{position:absolute;inset:0;border-radius:46px;background:#15171b;box-shadow:0 50px 90px rgba(20,30,60,.22),0 10px 24px rgba(20,30,60,.12);transform:translateZ(0)}
+  .phone .body:before{content:"";position:absolute;inset:3px;border-radius:43px;border:1.5px solid #4b4f57}
+  .phone .side{position:absolute;left:0;top:0;width:320px;height:680px;border-radius:46px;background:#2a2d33;transform:translateZ(-10px)}
+  .phone .screen{position:absolute;left:12px;top:12px;right:12px;bottom:12px;border-radius:36px;background:#fff;overflow:hidden;transform:translateZ(1px)}
+  .phone .cam{position:absolute;left:50%;top:22px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#0b0c0e;transform:translateZ(2px);z-index:5}
+  .phone .home{position:absolute;left:50%;bottom:20px;width:100px;height:5px;margin-left:-50px;border-radius:3px;background:#1a1c20;transform:translateZ(2px);z-index:5}
+  .status{height:48px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 22px 6px;font-size:12px;font-weight:600}
+  .status .ic{display:flex;gap:4px;align-items:center}
+  .status .bars{display:flex;gap:2px;align-items:flex-end}
+  .status .bars i{display:block;width:3px;background:#111;border-radius:1px}
+  .status .bat{width:22px;height:11px;border:1.5px solid #111;border-radius:3px;position:relative}
+  .status .bat:after{content:"";position:absolute;left:2px;top:2px;right:2px;bottom:2px;background:#111;border-radius:1px}
+
+  .app{position:absolute;left:0;top:48px;right:0;bottom:0;padding:0 16px;opacity:0}
+  .app.on{opacity:1}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:40px;margin-bottom:8px}
+  .nav .back{width:18px;height:18px;border-left:2.5px solid var(--blue);border-bottom:2.5px solid var(--blue);transform:rotate(45deg) translate(3px,-3px);border-radius:2px}
+  .nav .ttl{font-weight:600;font-size:14px}
+  .nav .sp{width:18px}
+  .seg{display:flex;background:var(--soft);border-radius:12px;padding:3px;margin-bottom:12px}
+  .seg span{flex:1;text-align:center;font-size:11.5px;font-weight:500;color:var(--muted);padding:7px 0;border-radius:10px}
+  .seg span.on{background:#fff;color:var(--ink);box-shadow:0 2px 6px rgba(0,0,0,.08)}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;box-shadow:0 4px 14px rgba(20,30,60,.05)}
+  .kpi{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .kpi .card{padding:10px 12px}
+  .kpi .l{font-size:10.5px;color:var(--muted);font-weight:500}
+  .kpi .v{font-size:17px;font-weight:600;margin-top:2px;letter-spacing:-.3px}
+  .kpi .d{font-size:10px;color:var(--green);font-weight:600;margin-top:2px}
+  .big{font-size:30px;font-weight:600;letter-spacing:-.6px}
+  .big small{font-size:14px;font-weight:600;margin-left:4px}
+  .lbl{font-size:11px;color:var(--muted);font-weight:500}
+  .row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .row:last-child{border-bottom:none}
+  .row .ico{width:36px;height:36px;border-radius:10px;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:16px;flex:0 0 36px}
+  .row .tx{flex:1;min-width:0}
+  .row .n{font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .row .s{font-size:10.5px;color:var(--muted);margin-top:2px}
+  .row .q{font-size:12.5px;font-weight:600;white-space:nowrap}
+  .cnt{display:flex;align-items:center;gap:6px;background:var(--soft);border-radius:9px;padding:4px 6px;font-size:12px;font-weight:600}
+  .cnt b{width:16px;text-align:center;color:var(--blue);font-weight:700}
+  .btn{height:44px;border-radius:14px;background:var(--blue);color:#fff;font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(31,110,247,.28)}
+  .btn.ghost{background:var(--soft);color:var(--muted);box-shadow:none}
+  .btn.ok{background:var(--green);box-shadow:0 8px 18px rgba(34,197,94,.28)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .tile{background:var(--soft);border-radius:14px;padding:14px 10px;text-align:center}
+  .tile .e{font-size:20px}
+  .tile .t{font-size:11.5px;font-weight:600;margin-top:6px}
+  .tile.on{outline:2px solid var(--blue);background:#eaf1ff}
+  .bar{height:8px;border-radius:4px;background:var(--soft);overflow:hidden;margin-top:6px}
+  .bar i{display:block;height:100%;background:var(--blue);border-radius:4px}
+  .bar.warn i{background:#f59e0b}
+  .bar.low i{background:var(--red)}
+  .badge{display:inline-block;font-size:10px;font-weight:600;padding:3px 8px;border-radius:100px;background:#e8fbee;color:#15803d}
+  .badge.low{background:#fee2e2;color:#b91c1c}
+  .badge.blue{background:#e8f0ff;color:var(--blue2)}
+  .tabbar{position:absolute;left:0;right:0;bottom:0;height:62px;border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:center;padding:0 10px 12px;background:#fff}
+  .tabbar div{font-size:9.5px;color:var(--muted);text-align:center;font-weight:500}
+  .tabbar div i{display:block;font-style:normal;font-size:16px;margin-bottom:2px}
+  .tabbar div.on{color:var(--blue)}
+  .okc{width:52px;height:52px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;margin:12px auto 10px;box-shadow:0 8px 20px rgba(34,197,94,.3)}
+  .okc svg{width:26px;height:26px}
+  .chart{display:flex;align-items:flex-end;gap:6px;height:88px;margin-top:10px;padding:0 2px}
+  .chart i{display:block;flex:1;border-radius:5px 5px 2px 2px;background:#dfe8fb;transform-origin:bottom}
+  .chart i.hi{background:var(--blue)}
+  .cl{display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:6px;padding:0 2px;font-weight:500}
+  .ring{width:92px;height:92px;border-radius:50%;margin:8px auto;display:flex;align-items:center;justify-content:center;background:conic-gradient(var(--blue) var(--p,0deg),var(--soft) 0)}
+  .ring div{width:70px;height:70px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:15px}
+  .press{position:absolute;width:100px;height:100px;border-radius:50%;border:3px solid var(--blue);opacity:0;pointer-events:none}
+
+  /* ---------- floating cards (3D world) ---------- */
+  .fcard{position:absolute;left:0;top:0;transform-style:preserve-3d;will-change:transform;opacity:0}
+  .note{width:270px;background:#fff;border-radius:18px;padding:12px 14px;box-shadow:0 24px 50px rgba(20,30,60,.16),0 2px 6px rgba(20,30,60,.06);display:flex;gap:11px;align-items:center}
+  .note .i{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;flex:0 0 40px}
+  .note .t{font-size:13px;font-weight:600;line-height:1.2}
+  .note .s{font-size:11px;color:var(--muted);margin-top:3px}
+  .note .ok{margin-left:auto;background:var(--green);color:#fff;font-size:11px;font-weight:600;padding:6px 10px;border-radius:100px;white-space:nowrap}
+  .doc{width:210px;background:#fff;border-radius:14px;padding:14px;box-shadow:0 30px 60px rgba(20,30,60,.2);border:1px solid var(--line)}
+  .doc .h{font-size:11px;font-weight:600;letter-spacing:.5px;color:var(--blue)}
+  .doc .t{font-size:13px;font-weight:600;margin-top:4px}
+  .doc .ln{height:6px;border-radius:3px;background:var(--soft);margin-top:8px}
+  .doc .ln.s{width:60%}
+  .doc .tot{display:flex;justify-content:space-between;margin-top:12px;font-size:12px;font-weight:600;border-top:1px solid var(--line);padding-top:8px}
+  .laptop{width:440px;transform-style:preserve-3d}
+  .laptop .scr{width:440px;height:280px;background:#15171b;border-radius:16px 16px 4px 4px;padding:10px;box-shadow:0 40px 80px rgba(20,30,60,.22)}
+  .laptop .scr .in{width:100%;height:100%;background:#fff;border-radius:8px;overflow:hidden;position:relative}
+  .laptop .base{width:500px;height:14px;background:linear-gradient(#d9dce3,#b9bdc7);border-radius:0 0 12px 12px;margin-left:-30px;box-shadow:0 10px 24px rgba(20,30,60,.2)}
+  .dash{display:flex;height:100%}
+  .dash .sb{width:92px;background:#0f1b33;padding:12px 10px;color:#fff}
+  .dash .sb .lg{font-size:9px;font-weight:600;letter-spacing:2px;margin-bottom:12px;display:flex;align-items:center;gap:5px}
+  .dash .sb .lg i{display:block;width:12px;height:12px;border-radius:3px;background:var(--blue)}
+  .dash .sb div.m{font-size:8.5px;opacity:.6;padding:5px 6px;border-radius:5px;margin-bottom:2px;font-weight:500}
+  .dash .sb div.m.on{opacity:1;background:rgba(255,255,255,.1)}
+  .dash .mn{flex:1;padding:12px;background:#f7f8fb}
+  .dash .mn .hh{font-size:11px;font-weight:600;margin-bottom:8px}
+  .dash .k{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+  .dash .k div{background:#fff;border-radius:8px;padding:7px 8px;border:1px solid var(--line)}
+  .dash .k .l{font-size:7.5px;color:var(--muted);font-weight:500}
+  .dash .k .v{font-size:12px;font-weight:600;margin-top:2px}
+  .dash .k .d{font-size:7.5px;color:var(--green);font-weight:600}
+  .dash .ch{background:#fff;border:1px solid var(--line);border-radius:8px;margin-top:6px;padding:8px;height:118px}
+  .dash .ch .chart{height:72px;margin-top:4px}
+  .pulse{position:absolute;border-radius:50%;border:2px solid var(--blue);opacity:0}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <div class="logo">
+    <div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M4 18V6l8 7 8-7v12" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="word">MEDISON</div>
+  </div>
+  <div class="steps" id="steps"><i></i><i></i><i></i></div>
+  <div class="headline" id="headline"></div>
+  <div class="pill" id="pill"></div>
+
+  <div class="world">
+    <!-- floating cards -->
+    <div class="fcard" id="fc1"><div class="note"><div class="i" style="background:#e8fbee">✅</div><div><div class="t">Заказ #1042 проведён</div><div class="s">2 450 000 UZS · только что</div></div></div></div>
+    <div class="fcard" id="fc2"><div class="note"><div class="i" style="background:#e8f0ff">📦</div><div><div class="t">Склад обновлён</div><div class="s">−3 шт · остаток 33</div></div></div></div>
+    <div class="fcard" id="fc3"><div class="note"><div class="i" style="background:#fff4e5">📈</div><div><div class="t">Прибыль за день</div><div class="s">+18% к вчерашнему</div></div><div class="ok">Отчёт</div></div></div>
+    <div class="fcard" id="fdoc"><div class="doc"><div class="h">ОТЧЁТ · СЕГОДНЯ</div><div class="t">Продажи и прибыль</div><div class="ln"></div><div class="ln s"></div><div class="ln"></div><div class="ln s"></div><div class="tot"><span>Итого</span><span>12 480 000</span></div></div></div>
+    <div class="fcard" id="flap"><div class="laptop"><div class="scr"><div class="in"><div class="dash">
+      <div class="sb"><div class="lg"><i></i>MEDISON</div><div class="m on">Дашборд</div><div class="m">Продажи</div><div class="m">Склад</div><div class="m">Финансы</div><div class="m">Сотрудники</div><div class="m">Отчёты</div></div>
+      <div class="mn"><div class="hh">Сводка за сегодня</div>
+        <div class="k"><div><div class="l">Выручка</div><div class="v">12,48 млн</div><div class="d">+18%</div></div><div><div class="l">Заказы</div><div class="v">148</div><div class="d">+9%</div></div><div><div class="l">Прибыль</div><div class="v">3,9 млн</div><div class="d">+21%</div></div></div>
+        <div class="ch"><div class="l" style="font-size:8px;color:var(--muted);font-weight:500">Выручка по дням</div><div class="chart" id="lchart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="hi"></i></div></div>
+      </div></div></div></div><div class="base"></div></div></div>
+
+    <!-- phone -->
+    <div class="phone" id="phone">
+      <div class="side"></div>
+      <div class="body"></div>
+      <div class="screen">
+        <div class="status"><span>18:20</span><div class="ic"><div class="bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></div><div class="bat"></div></div></div>
+
+        <!-- S1: dashboard -->
+        <div class="app" id="sDash">
+          <div class="nav"><div class="sp"></div><div class="ttl">Главная</div><div class="sp"></div></div>
+          <div class="card"><div class="lbl">Выручка сегодня</div><div class="big" id="dashSum">12 480 000<small>UZS</small></div><span class="badge">+18% к вчера</span>
+            <div class="chart" id="dchart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="hi"></i></div>
+            <div class="cl"><span>1</span><span>5</span><span>10</span><span>15</span><span>20</span><span>сегодня</span></div></div>
+          <div class="kpi"><div class="card"><div class="l">Заказы</div><div class="v">148</div><div class="d">+9%</div></div><div class="card"><div class="l">Склад</div><div class="v">1 204 поз.</div><div class="d" style="color:#f59e0b">3 на исходе</div></div><div class="card"><div class="l">Прибыль</div><div class="v">3 910 000</div><div class="d">+21%</div></div><div class="card"><div class="l">Касса</div><div class="v">8 120 000</div><div class="d">сходится</div></div></div>
+          <div class="tabbar"><div class="on"><i>⌂</i>Главная</div><div><i>🧾</i>Продажи</div><div><i>📦</i>Склад</div><div><i>💳</i>Финансы</div><div><i>📊</i>Отчёты</div></div>
+        </div>
+
+        <!-- S2: modules -->
+        <div class="app" id="sMod">
+          <div class="nav"><div class="sp"></div><div class="ttl">Модули</div><div class="sp"></div></div>
+          <div class="grid2" id="modGrid">
+            <div class="tile"><div class="e">🧾</div><div class="t">Продажи</div></div>
+            <div class="tile"><div class="e">📦</div><div class="t">Склад</div></div>
+            <div class="tile"><div class="e">💳</div><div class="t">Финансы</div></div>
+            <div class="tile"><div class="e">👥</div><div class="t">Сотрудники</div></div>
+            <div class="tile"><div class="e">🤝</div><div class="t">Клиенты</div></div>
+            <div class="tile"><div class="e">📊</div><div class="t">Отчёты</div></div>
+          </div>
+          <div class="card" style="margin-top:10px"><div class="lbl">Одна база для всего бизнеса</div><div style="font-size:12.5px;font-weight:600;margin-top:4px">Заказы, остатки и деньги — в одном месте</div></div>
+          <div class="tabbar"><div><i>⌂</i>Главная</div><div><i>🧾</i>Продажи</div><div class="on"><i>▦</i>Модули</div><div><i>💳</i>Финансы</div><div><i>📊</i>Отчёты</div></div>
+        </div>
+
+        <!-- S3: order -->
+        <div class="app" id="sOrder">
+          <div class="nav"><div class="back"></div><div class="ttl">Заказ #1042</div><div class="sp"></div></div>
+          <div class="seg"><span class="on">Товары</span><span>Клиент</span><span>Оплата</span></div>
+          <div class="card" style="padding:4px 12px">
+            <div class="row" id="o1"><div class="ico">💊</div><div class="tx"><div class="n">Витамин D3 2000 МЕ</div><div class="s">149 000 UZS</div></div><div class="cnt">−<b id="o1q">1</b>+</div></div>
+            <div class="row" id="o2"><div class="ico">🩺</div><div class="tx"><div class="n">Тонометр Omron M2</div><div class="s">520 000 UZS</div></div><div class="cnt">−<b>1</b>+</div></div>
+            <div class="row" id="o3"><div class="ico">🧴</div><div class="tx"><div class="n">Антисептик 500 мл</div><div class="s">45 000 UZS</div></div><div class="cnt">−<b>2</b>+</div></div>
+          </div>
+          <div class="card" style="margin-top:10px;display:flex;justify-content:space-between;align-items:center"><div><div class="lbl">Итого</div><div style="font-size:18px;font-weight:600" id="oSum">149 000 UZS</div></div><span class="badge blue">Черновик</span></div>
+          <div style="position:absolute;left:16px;right:16px;bottom:18px;display:flex;gap:8px"><div class="btn ghost" style="flex:1">Отложить</div><div class="btn" style="flex:1.4">Провести</div></div>
+        </div>
+
+        <!-- S4: stock -->
+        <div class="app" id="sStock">
+          <div class="nav"><div class="back"></div><div class="ttl">Склад · Главный</div><div class="sp"></div></div>
+          <div class="seg"><span class="on">Остатки</span><span>Приход</span><span>Списание</span></div>
+          <div class="card" style="padding:4px 12px">
+            <div class="row"><div class="ico">💊</div><div class="tx"><div class="n">Витамин D3 2000 МЕ</div><div class="bar"><i id="b1" style="width:70%"></i></div></div><div class="q" id="q1">36 шт</div></div>
+            <div class="row"><div class="ico">🩺</div><div class="tx"><div class="n">Тонометр Omron M2</div><div class="bar warn"><i id="b2" style="width:30%"></i></div></div><div class="q" id="q2">8 шт</div></div>
+            <div class="row"><div class="ico">🧴</div><div class="tx"><div class="n">Антисептик 500 мл</div><div class="bar"><i id="b3" style="width:85%"></i></div></div><div class="q" id="q3">120 шт</div></div>
+            <div class="row"><div class="ico">🩹</div><div class="tx"><div class="n">Пластырь, уп.</div><div class="bar low"><i style="width:8%"></i></div></div><div class="q"><span class="badge low">2 шт</span></div></div>
+          </div>
+          <div class="card" style="margin-top:10px"><div class="lbl">Автосписание</div><div style="font-size:12.5px;font-weight:600;margin-top:4px" id="stockMsg">Остатки обновляются при проведении заказа</div></div>
+          <div class="tabbar"><div><i>⌂</i>Главная</div><div><i>🧾</i>Продажи</div><div class="on"><i>📦</i>Склад</div><div><i>💳</i>Финансы</div><div><i>📊</i>Отчёты</div></div>
+        </div>
+
+        <!-- S5: confirm -->
+        <div class="app" id="sConfirm">
+          <div class="nav"><div class="back"></div><div class="ttl">Заказ #1042</div><div class="sp"></div></div>
+          <div class="seg"><span>Товары</span><span>Клиент</span><span class="on">Оплата</span></div>
+          <div class="card" style="text-align:center;padding:18px 12px"><div class="lbl">К оплате</div><div class="big">2 450 000<small>UZS</small></div>
+            <div class="grid2" style="margin-top:14px"><div class="tile on"><div class="e">💵</div><div class="t">Наличные</div></div><div class="tile"><div class="e">💳</div><div class="t">Карта</div></div><div class="tile"><div class="e">🏦</div><div class="t">Перевод</div></div><div class="tile"><div class="e">🧾</div><div class="t">В долг</div></div></div></div>
+          <div class="card" style="margin-top:10px;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:500"><span>Печать чека</span><span style="width:38px;height:22px;border-radius:11px;background:var(--blue);position:relative"><span style="position:absolute;right:2px;top:2px;width:18px;height:18px;border-radius:50%;background:#fff"></span></span></div>
+          <div style="position:absolute;left:16px;right:16px;bottom:18px;display:flex;gap:8px"><div class="btn ghost" style="flex:1">Отложить</div><div class="btn" id="btnGo" style="flex:1.4">Провести</div></div>
+          <div class="press" id="press"></div>
+        </div>
+
+        <!-- S6: report -->
+        <div class="app" id="sRep">
+          <div class="nav"><div class="back"></div><div class="ttl">Отчёты</div><div class="sp"></div></div>
+          <div class="seg"><span class="on">День</span><span>Неделя</span><span>Месяц</span></div>
+          <div class="card"><div class="lbl">Прибыль сегодня</div><div class="big" id="repSum">0<small>UZS</small></div><span class="badge">+21% к вчера</span>
+            <div class="chart" id="rchart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="hi"></i></div>
+            <div class="cl"><span>1</span><span>5</span><span>10</span><span>15</span><span>20</span><span>сегодня</span></div></div>
+          <div class="kpi"><div class="card"><div class="l">Средний чек</div><div class="v">84 300</div><div class="d">+6%</div></div><div class="card"><div class="l">Маржа</div><div class="v">31%</div><div class="d">+2 п.п.</div></div></div>
+          <div class="tabbar"><div><i>⌂</i>Главная</div><div><i>🧾</i>Продажи</div><div><i>📦</i>Склад</div><div><i>💳</i>Финансы</div><div class="on"><i>📊</i>Отчёты</div></div>
+        </div>
+
+        <!-- S7: realtime -->
+        <div class="app" id="sLive">
+          <div class="nav"><div class="sp"></div><div class="ttl">Главная</div><div class="sp"></div></div>
+          <div class="card" style="text-align:center"><div class="lbl">План на день</div><div class="ring" id="ring"><div id="ringV">0%</div></div><div style="font-size:12px;font-weight:600">12 480 000 из 13 000 000</div></div>
+          <div class="kpi"><div class="card"><div class="l">Касса</div><div class="v">8 120 000</div><div class="d">сходится</div></div><div class="card"><div class="l">Остатки</div><div class="v">1 201 поз.</div><div class="d">обновлены</div></div></div>
+          <div class="card" style="margin-top:10px;display:flex;gap:10px;align-items:center"><div class="ico" style="width:36px;height:36px;border-radius:10px;background:#e8f0ff;display:flex;align-items:center;justify-content:center">🔔</div><div><div style="font-size:12.5px;font-weight:600">Уведомление владельцу</div><div class="lbl">Выручка за день +18%</div></div></div>
+          <div class="tabbar"><div class="on"><i>⌂</i>Главная</div><div><i>🧾</i>Продажи</div><div><i>📦</i>Склад</div><div><i>💳</i>Финансы</div><div><i>📊</i>Отчёты</div></div>
+        </div>
+
+        <!-- S8: success / CTA -->
+        <div class="app" id="sDone">
+          <div class="nav"><div class="sp"></div><div class="ttl">Готово</div><div class="sp"></div></div>
+          <div class="okc"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div style="text-align:center;font-size:15px;font-weight:600;line-height:1.25">Бизнес работает<br>как одна система</div>
+          <div class="lbl" style="text-align:center;margin-top:4px">Заказы · Склад · Финансы · Отчёты</div>
+          <div class="grid2" style="margin-top:16px"><div class="tile"><div class="e">⬇</div><div class="t">Скачать отчёт</div></div><div class="tile"><div class="e">↗</div><div class="t">Поделиться</div></div></div>
+          <div class="card" style="margin-top:10px;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:500"><span>Уведомления владельцу</span><span style="width:38px;height:22px;border-radius:11px;background:var(--blue);position:relative"><span style="position:absolute;right:2px;top:2px;width:18px;height:18px;border-radius:50%;background:#fff"></span></span></div>
+          <div style="position:absolute;left:16px;right:16px;bottom:18px"><div class="btn">Продолжить</div></div>
+        </div>
+
+      </div>
+      <div class="cam"></div>
+      <div class="home"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---------- helpers ----------
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const easeOut=x=>1-Math.pow(1-x,3);
+const easeInOut=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const easeBack=x=>{const c=1.70158,c3=c+1;return 1+c3*Math.pow(x-1,3)+c*Math.pow(x-1,2);};
+const lerp=(a,b,p)=>a+(b-a)*p;
+// keyframe interpolation: pts=[[t,v],...]
+function kf(t,pts,ease=easeInOut){
+  if(t<=pts[0][0])return pts[0][1];
+  for(let i=1;i<pts.length;i++){
+    if(t<=pts[i][0]){const [t0,v0]=pts[i-1],[t1,v1]=pts[i];return lerp(v0,v1,ease(clamp((t-t0)/(t1-t0))));}
+  }
+  return pts[pts.length-1][1];
+}
+const fmt=n=>Math.round(n).toLocaleString('ru-RU').replace(/ /g,' ');
+
+// ---------- script (scenes) ----------
+// each: start, end, lines (array of words; words with * are blue), screen id, step (1..3 or 0)
+const SCENES=[
+  {s:0,   e:7,    lines:['Весь бизнес —','в *одном* *приложении*'], screen:'sDash'},
+  {s:7,   e:9.5,  lines:['Как это *работает?*'], screen:'sMod'},
+  {s:9.5, e:12,   lines:['*Создайте* заказ'], screen:'sOrder', step:1},
+  {s:12,  e:14.5, lines:['*Склад* обновится сам'], screen:'sStock', step:2},
+  {s:14.5,e:17,   lines:['Нажмите *«Провести»*'], screen:'sConfirm', step:3},
+  {s:17,  e:23,   lines:['Данные сразу','попадают в *отчёты*'], screen:'sRep'},
+  {s:23,  e:28.5, lines:['Прибыль видна','в *реальном* *времени*'], screen:'sLive'},
+  {s:28.5,e:35.5, lines:['Хотите навести','*порядок* в бизнесе?'], screen:'sDone', pill:'Свяжитесь с менеджером MEDISON'},
+];
+function sceneAt(t){return SCENES.find(s=>t>=s.s&&t<s.e)||SCENES[SCENES.length-1];}
+
+const headline=document.getElementById('headline');
+let builtFor=null;
+function buildHeadline(sc){
+  headline.innerHTML='';
+  sc.lines.forEach((ln,li)=>{
+    ln.split(' ').forEach((w,wi,arr)=>{
+      const span=document.createElement('span');span.className='w';
+      let txt=w;
+      if(w.startsWith('*')){span.classList.add('b');txt=w.replace(/\*/g,'');}
+      span.textContent=txt+(wi<arr.length-1?' ':'');
+      headline.appendChild(span);
+    });
+    if(li<sc.lines.length-1)headline.appendChild(document.createElement('br'));
+  });
+  builtFor=sc;
+}
+function animHeadline(sc,t){
+  if(builtFor!==sc)buildHeadline(sc);
+  const words=headline.querySelectorAll('.w');
+  const lt=t-sc.s, out=sc.e-t;
+  words.forEach((w,i)=>{
+    const d=i*0.07;
+    const p=easeOut(clamp((lt-d)/0.45));
+    const q=1-easeInOut(clamp((0.3-out)/0.3)); // fade out in the last 0.3s
+    w.style.opacity=(p*q).toFixed(3);
+    w.style.transform=`translateY(${(1-p)*14}px)`;
+    w.style.filter=`blur(${(1-p)*8}px)`;
+  });
+}
+
+const steps=document.getElementById('steps');
+const pill=document.getElementById('pill');
+const phone=document.getElementById('phone');
+const apps=[...document.querySelectorAll('.app')];
+function showScreen(id,fade=1){
+  apps.forEach(a=>{a.classList.toggle('on',a.id===id);a.style.opacity=a.id===id?fade:0;});
+}
+function setCard(id,{x=0,y=0,z=0,rx=0,ry=0,rz=0,s=1,o=1}){
+  const el=document.getElementById(id);
+  el.style.opacity=o;
+  el.style.transform=`translate3d(${x}px,${y}px,${z}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg) scale(${s})`;
+}
+function setPhone({x=0,y=0,rx=0,ry=0,rz=0,s=1}){
+  phone.style.transform=`translate3d(${x}px,${y}px,0) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg) scale(${s})`;
+}
+function bars(id,heights,prog){
+  const els=document.getElementById(id).children;
+  for(let i=0;i<els.length;i++){const p=easeOut(clamp((prog*els.length-i)/1.2));els[i].style.height=(heights[i]*p)+'%';}
+}
+const DH=[38,52,45,60,55,70,62,78,66,84,74,100,80,96];
+function hideCards(){['fc1','fc2','fc3','fdoc','flap'].forEach(id=>document.getElementById(id).style.opacity=0);}
+
+// ---------- master seek ----------
+window.seek=function(t){
+  const sc=sceneAt(t); const lt=t-sc.s; const out=sc.e-t;
+  animHeadline(sc,t);
+  // steps indicator
+  if(sc.step){steps.style.opacity=easeOut(clamp(lt/0.4));[...steps.children].forEach((i,k)=>i.classList.toggle('on',k<sc.step));}else steps.style.opacity=0;
+  // pill
+  if(sc.pill){pill.textContent=sc.pill;const p=easeBack(clamp((lt-0.9)/0.6));pill.style.opacity=clamp((lt-0.9)/0.3);pill.style.transform=`translateY(${(1-p)*18}px) scale(${0.9+0.1*p})`;}else pill.style.opacity=0;
+  hideCards();
+  // screen fade on scene change
+  const fadeIn=easeOut(clamp(lt/0.35));
+  showScreen(sc.screen,fadeIn);
+
+  // phone & scene-specific choreography
+  switch(sc.screen){
+    case 'sDash':{
+      const rise=easeOut(clamp(lt/1.1));
+      const ry=kf(t,[[0,-18],[3,-6],[6.5,-14]]), rx=kf(t,[[0,6],[3.5,3],[7,5]]);
+      setPhone({y:(1-rise)*260+kf(t,[[1,0],[7,-10]]),ry,rx,rz:kf(t,[[0,-6],[3,-2],[7,-5]]),s:0.92+0.08*rise});
+      bars('dchart',DH,clamp((lt-0.6)/1.4));
+      document.getElementById('dashSum').innerHTML=fmt(12480000*easeOut(clamp((lt-0.5)/1.6)))+'<small>UZS</small>';
+      // floating cards fly in
+      const p1=easeBack(clamp((lt-1.6)/0.7)), p2=easeBack(clamp((lt-2.4)/0.7)), p3=easeBack(clamp((lt-3.2)/0.7));
+      setCard('fc1',{x:lerp(520,370,p1),y:lerp(420,470,p1)+Math.sin(t*1.3)*5,z:120,ry:-16,rz:-4,o:clamp((lt-1.6)/0.3)*(out<0.4?out/0.4:1)});
+      setCard('fc2',{x:lerp(-240,40,p2),y:lerp(760,700,p2)+Math.sin(t*1.1+1)*5,z:140,ry:14,rz:3,o:clamp((lt-2.4)/0.3)*(out<0.4?out/0.4:1)});
+      setCard('fc3',{x:lerp(560,390,p3),y:lerp(940,890,p3)+Math.sin(t*1.5+2)*5,z:160,ry:-18,rz:-3,o:clamp((lt-3.2)/0.3)*(out<0.4?out/0.4:1)});
+      break;}
+    case 'sMod':{
+      setPhone({y:kf(t,[[7,-10],[9.5,-10]]),ry:kf(t,[[7,-14],[9.5,8]]),rx:4,rz:-2});
+      const tiles=document.getElementById('modGrid').children;
+      for(let i=0;i<tiles.length;i++){const p=easeBack(clamp((lt-0.25-i*0.12)/0.5));tiles[i].style.transform=`scale(${0.6+0.4*p})`;tiles[i].style.opacity=clamp((lt-0.25-i*0.12)/0.25);}
+      break;}
+    case 'sOrder':{
+      setPhone({y:-10,ry:kf(t,[[9.5,8],[12,0]]),rx:3,rz:kf(t,[[9.5,-2],[12,0]])});
+      ['o1','o2','o3'].forEach((id,i)=>{const p=easeBack(clamp((lt-0.3-i*0.45)/0.5));const el=document.getElementById(id);el.style.opacity=clamp((lt-0.3-i*0.45)/0.25);el.style.transform=`translateX(${(1-p)*40}px)`;});
+      const items=[149000,520000,45000*2];let sum=0;['o1','o2','o3'].forEach((id,i)=>{if(lt>0.55+i*0.45)sum+=items[i];});
+      const sumTarget=sum; document.getElementById('oSum').textContent=fmt(sumTarget)+' UZS';
+      document.getElementById('o1q').textContent=lt>2.0?'2':'1';
+      if(lt>2.0)document.getElementById('oSum').textContent=fmt(sumTarget+149000)+' UZS';
+      break;}
+    case 'sStock':{
+      setPhone({y:-10,ry:kf(t,[[12,0],[14.5,-8]]),rx:3,rz:kf(t,[[12,0],[14.5,-2]])});
+      const p=easeInOut(clamp((lt-0.9)/0.6));
+      document.getElementById('q1').textContent=Math.round(lerp(36,34,p))+' шт';document.getElementById('b1').style.width=lerp(70,66,p)+'%';
+      document.getElementById('q2').textContent=Math.round(lerp(8,7,p))+' шт';document.getElementById('b2').style.width=lerp(30,26,p)+'%';
+      document.getElementById('q3').textContent=Math.round(lerp(120,118,p))+' шт';document.getElementById('b3').style.width=lerp(85,83,p)+'%';
+      document.getElementById('stockMsg').textContent=p>0.5?'Списано по заказу #1042: 5 позиций':'Остатки обновляются при проведении заказа';
+      break;}
+    case 'sConfirm':{
+      setPhone({y:-10,ry:kf(t,[[14.5,-8],[17,-4]]),rx:3,rz:-1});
+      const btn=document.getElementById('btnGo');
+      const press=easeInOut(clamp((lt-1.1)/0.25))*(1-easeInOut(clamp((lt-1.45)/0.25)));
+      btn.style.transform=`scale(${1-0.08*press})`;
+      btn.classList.toggle('ok',lt>1.5);btn.textContent=lt>1.5?'✓ Проведено':'Провести';
+      const pr=document.getElementById('press');const rp=clamp((lt-1.3)/0.6);
+      pr.style.left='203px';pr.style.top='568px';pr.style.opacity=(1-rp)*(lt>1.25?1:0);pr.style.transform=`translate(-50%,-50%) scale(${0.4+1.2*rp})`;
+      break;}
+    case 'sRep':{
+      // phone rotates and a report document flies out
+      const ry=kf(t,[[17,-4],[19,26],[21.5,10],[23,2]]), rx=kf(t,[[17,3],[19,8],[23,4]]);
+      setPhone({y:-10,x:kf(t,[[17,0],[19,-40],[23,0]]),ry,rx,rz:kf(t,[[17,-1],[19,-6],[23,0]])});
+      const dp=easeBack(clamp((lt-0.6)/0.9));
+      setCard('fdoc',{x:lerp(300,470,dp),y:lerp(640,500,dp)+Math.sin(t*1.2)*6,z:lerp(0,200,dp),ry:-22,rz:6,rx:4,s:lerp(0.6,1,dp),o:clamp((lt-0.6)/0.3)*(out<0.4?out/0.4:1)});
+      bars('rchart',DH.slice(0,12).map(h=>h*0.9),clamp((lt-1.6)/1.6));
+      document.getElementById('repSum').innerHTML=fmt(3910000*easeOut(clamp((lt-1.6)/1.8)))+'<small>UZS</small>';
+      const p3=easeBack(clamp((lt-3.2)/0.7));
+      setCard('fc3',{x:lerp(-260,30,p3),y:980+Math.sin(t*1.3)*5,z:150,ry:14,rz:3,o:clamp((lt-3.2)/0.3)*(out<0.4?out/0.4:1)});
+      break;}
+    case 'sLive':{
+      // phone moves right, laptop appears on the left
+      const mv=easeInOut(clamp(lt/1.0));
+      setPhone({x:lerp(0,170,mv),y:lerp(-10,70,mv),ry:kf(t,[[23,2],[24,-14],[28.5,-10]]),rx:4,rz:-3,s:lerp(1,0.86,mv)});
+      const lp=easeBack(clamp((lt-0.5)/0.9));
+      setCard('flap',{x:lerp(-520,14,lp),y:600+Math.sin(t*0.9)*4,z:40,ry:20,rx:4,rz:-2,s:0.8,o:clamp((lt-0.5)/0.3)*(out<0.4?out/0.4:1)});
+      bars('lchart',DH,clamp((lt-1.2)/1.6));
+      const rp=easeOut(clamp((lt-0.8)/1.8));
+      document.getElementById('ring').style.setProperty('--p',(rp*0.96*360)+'deg');document.getElementById('ringV').textContent=Math.round(rp*96)+'%';
+      break;}
+    case 'sDone':{
+      const rise=easeOut(clamp(lt/0.9));
+      setPhone({x:lerp(170,0,rise),y:lerp(70,-10,rise)+kf(t,[[29.5,0],[35.5,-6]]),ry:kf(t,[[28.5,-10],[31,6],[35.5,-4]]),rx:kf(t,[[28.5,4],[35.5,2]]),rz:kf(t,[[28.5,-3],[31,0],[35.5,-2]]),s:lerp(0.86,1,rise)});
+      break;}
+  }
+  // global end fade to white
+  const endFade=clamp((t-34.9)/0.6);
+  document.getElementById('stage').style.opacity=1-endFade;
+};
+window.seek(0);
+// preview mode: play in browser when opened directly with ?play
+if(location.search.includes('play')){const t0=performance.now();(function loop(){const t=((performance.now()-t0)/1000)%35.5;window.seek(t);requestAnimationFrame(loop);})();}
+</script>
+</body>
+</html>
